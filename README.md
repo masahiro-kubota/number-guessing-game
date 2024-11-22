@@ -1,3 +1,4 @@
+# Number Guessing Game
 1. The program randomly choses a secret number between 1 and 100
 2. The player can input a number at most 7 times
 3. The player inputting a number, the program serve the following hint
