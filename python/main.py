@@ -2,6 +2,7 @@
 
 from enum import Enum
 import random
+import time
 
 
 class number_guessing_game():
@@ -12,6 +13,7 @@ class number_guessing_game():
         self._present_answer = None
         self._count = 0
         self._is_success = False
+        self._start_time = time.time()
         self.start()
 
     def start(self):
@@ -82,7 +84,11 @@ class number_guessing_game():
 
     def final_check(self):
         if self._is_success == True:
+            self._end_time = time.time()
+            self._elapsed_time = self._end_time - self._start_time
             print("Congratulations!! That's correct!!")
+            print(f"Counts: {self._count}")
+            print(f"Time: {self._elapsed_time}")
         else:
             print(f"Secret number is {self._secret_number}.")
             pass
