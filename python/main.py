@@ -15,7 +15,7 @@ class number_guessing_game():
 
     def start(self):
         for i in range(self._answer_limit):
-            user_answer = self.derive_answer()
+            user_answer = self.validate_input()
             self._present_answer = user_answer
             self.answer_check(user_answer)
             if self._is_success: break
@@ -24,11 +24,22 @@ class number_guessing_game():
             self._previous_answer = self._present_answer
             self._count += 1
         self.final_check()
-
-    def derive_answer(self):
-        user_answer = int(input())
-        return user_answer
                 
+    def validate_input(self):
+        while True:
+            try:
+                user_answer = float(input("Please input a integer between 1 and 100.\n"))
+            except ValueError:
+                print("Please input a number")
+            else:
+                if user_answer.is_integer():
+                    user_answer_int = int(user_answer)
+                    if user_answer_int > 0 and user_answer_int < 101:
+                        return user_answer_int
+                    else:
+                        print("Please input a number between 1 and 100")
+                else:
+                    print("Please input an integer")
         
     def answer_check(self, user_answer):
         if self._secret_number == user_answer:
@@ -38,19 +49,18 @@ class number_guessing_game():
             
 
     def give_hint(self, user_answer):
+        # TODO high or lowの判定 
         if self._count == 0:
             return
         else:
             previous_distance = abs(self._previous_answer - self._secret_number)
             present_distance = abs(self._present_answer - self._secret_number)
             if previous_distance > present_distance:
-                print("closer")
+                print("Getting closer!")
             elif previous_distance < present_distance:
-                print("farther")
+                print("Getting farther!")
             elif previous_distance == present_distance:
                 print("The distance has not changed")
-            else:
-                print("please input a number between 1 and 100")        
 
     def final_check(self):
         if self._is_success == True:
