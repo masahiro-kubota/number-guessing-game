@@ -4,6 +4,7 @@ from enum import Enum
 import random
 import time
 
+# TODO add test
 
 class number_guessing_game():
     def __init__(self):
