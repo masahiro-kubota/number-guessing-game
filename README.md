@@ -3,7 +3,7 @@
 2. The player can input a number at most 7 times
 3. The player inputting a number, the program serve the following hint
     - If the input number is smaller -> "Go higher!"
-    - If the input number is bigger -> "Go lowwer!"
+    - If the input number is bigger -> "Go lower!"
     - If the input number is getting closer -> "Getting closer!"
     - If the input number is getting farther -> "Getting farther!"
 4. The end of the game
