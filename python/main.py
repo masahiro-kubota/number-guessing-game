@@ -15,6 +15,8 @@ class number_guessing_game():
         self._count = 0
         self._is_success = False
         self._start_time = time.time()
+        self._end_time = None
+        self._elapsed_time = None
         self.start()
 
     def start(self):
