@@ -7,10 +7,10 @@ global start_time
 
 class number_guessing_game():
     def __init__(self):
-        self._secret_number = 42
-        asyncio.run(self.main())
+        self._secret_number = 43
+        asyncio.run(self.async_main())
 
-    async def main(self):
+    async def async_main(self):
         loop = asyncio.get_running_loop()
         tasks = [loop.run_in_executor(None, self.validate_input), loop.run_in_executor(None, self.provide_hint)]
         await asyncio.gather(*tasks)
@@ -31,7 +31,7 @@ class number_guessing_game():
     def provide_hint(self):
         for i in range(10):
             start_hint_time = time()
-            print("This is hint!!")
+            print("Secret number is an even number!") if self._secret_number%2==0 else print("Secret number is an odd number!")
             sleep(1)
             finish_hint_time = time()
             print(f"elapsed hint time{i}: {finish_hint_time - start_hint_time}") 
