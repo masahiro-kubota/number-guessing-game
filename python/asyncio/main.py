@@ -12,26 +12,24 @@ class number_guessing_game():
     def __init__(self):
         self._start_time = time()
         self._secret_number = 42 # random.randint(1,100)
+        self._num_of_respose = 0
+        self._is_correct = False
         asyncio.run(self.async_main())
         self._finish_time = time()
         elapsed_time = self._finish_time - self._start_time
         print(f"elapsed_time: {elapsed_time}")
 
     async def async_main(self):
-        loop = asyncio.get_running_loop()
         task1 = self.validate_input()
         task2 = self.provide_hint()
         tasks = [task1, task2]
         try:
-            async with asyncio.timeout(4):
+            async with asyncio.timeout(10):
                 await asyncio.gather(*tasks)
         except asyncio.CancelledError:
             print("Task is being Cancelled, cleaning up....")
         except TimeoutError:
-            try: 
-                loop.close()
-            except RuntimeError:
-                print("Time Out!")
+            pass
 
     async def validate_input(self):
         try:
@@ -40,9 +38,12 @@ class number_guessing_game():
             while True:
                 i += 1
                 player_input_raw = await aioconsole.ainput()
+                self._num_of_respose += 1
                 player_input = int(player_input_raw)
                 if player_input == self._secret_number:
                     print("Correct")
+                    self._is_correct = True
+                    break
                 else:
                     print("incorrect") 
                 finish_validate_time = time()
@@ -51,15 +52,11 @@ class number_guessing_game():
             pass
 
     async def provide_hint(self):
-        for i in range(4):
-            logger.info('Process Start!')
-            logger.debug('debug')
-            logger.info('info')
-            logger.warning('warning')
-            logger.error('error')
-            logger.info('Process End!')
-            # start_hint_time = time()
+        i = 0
+        while not self._is_correct:
+            i += 1
             print("Secret number is an even number!") if self._secret_number%2==0 else print("Secret number is an odd number!")
+            print(f"Number of your resposes is {self._num_of_respose}")
             await asyncio.sleep(1)
             finish_hint_time = time()
             print(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
