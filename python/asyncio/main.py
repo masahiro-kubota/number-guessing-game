@@ -2,7 +2,7 @@
 
 import asyncio
 import json
-from logging import getLogger, DEBUG, config
+from logging import getLogger, ERROR, WARNING, INFO, DEBUG, config
 from time import time, sleep
 import random
 
@@ -64,12 +64,16 @@ class number_guessing_game():
             finish_hint_time = time()
             print(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
 
-if __name__ == "__main__":
-    with open('log_config.json', 'r') as f:
+def load_logging_config(file, log_level):
+    with open(file, 'r') as f:
         log_conf = json.load(f)
-    log_conf["handlers"]["consoleHandler"]["level"] = DEBUG
+    log_conf["handlers"]["consoleHandler"]["level"] = log_level
     config.dictConfig(log_conf)
     logger = getLogger(__name__)
+    return logger
+    
+if __name__ == "__main__":
+    logger = load_logging_config('log_config.json', ERROR)
     game = number_guessing_game()
 
 
