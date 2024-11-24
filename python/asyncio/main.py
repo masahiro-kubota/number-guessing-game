@@ -8,13 +8,14 @@ import random
 
 import aioconsole
 
-global start_time
-
 class number_guessing_game():
     def __init__(self):
+        self._start_time = time()
         self._secret_number = 42 # random.randint(1,100)
         asyncio.run(self.async_main())
-               
+        self._finish_time = time()
+        elapsed_time = self._finish_time - self._start_time
+        print(f"elapsed_time: {elapsed_time}")
 
     async def async_main(self):
         loop = asyncio.get_running_loop()
@@ -61,7 +62,7 @@ class number_guessing_game():
             print("Secret number is an even number!") if self._secret_number%2==0 else print("Secret number is an odd number!")
             await asyncio.sleep(1)
             finish_hint_time = time()
-            print(f"elapsed hint time{i}: {finish_hint_time - start_time}") 
+            print(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
 
 if __name__ == "__main__":
     with open('log_config.json', 'r') as f:
@@ -69,17 +70,6 @@ if __name__ == "__main__":
     log_conf["handlers"]["consoleHandler"]["level"] = DEBUG
     config.dictConfig(log_conf)
     logger = getLogger(__name__)
-    start_time = time()
     game = number_guessing_game()
-    finish_time = time()
-    elapsed_time = finish_time - start_time
-    print(f"elapsed_time: {elapsed_time}")
-
-
-
-
-
-
-
 
 
