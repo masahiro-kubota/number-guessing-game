@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 
 import asyncio
+import json
+from logging import getLogger, DEBUG, config
 from time import time, sleep
 import random
 
@@ -49,6 +51,12 @@ class number_guessing_game():
 
     async def provide_hint(self):
         for i in range(4):
+            logger.info('Process Start!')
+            logger.debug('debug')
+            logger.info('info')
+            logger.warning('warning')
+            logger.error('error')
+            logger.info('Process End!')
             # start_hint_time = time()
             print("Secret number is an even number!") if self._secret_number%2==0 else print("Secret number is an odd number!")
             await asyncio.sleep(1)
@@ -56,8 +64,22 @@ class number_guessing_game():
             print(f"elapsed hint time{i}: {finish_hint_time - start_time}") 
 
 if __name__ == "__main__":
+    with open('log_config.json', 'r') as f:
+        log_conf = json.load(f)
+    log_conf["handlers"]["consoleHandler"]["level"] = DEBUG
+    config.dictConfig(log_conf)
+    logger = getLogger(__name__)
     start_time = time()
     game = number_guessing_game()
     finish_time = time()
     elapsed_time = finish_time - start_time
     print(f"elapsed_time: {elapsed_time}")
+
+
+
+
+
+
+
+
+

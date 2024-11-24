@@ -9,3 +9,4 @@
 
 ### supplement
 - input() is blocking, so this program uses aioconsole.ainput() to use non-blocking input method.
+  - In python, to kill blocking is difficult. 
