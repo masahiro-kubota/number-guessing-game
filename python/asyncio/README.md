@@ -6,3 +6,6 @@
 ## Time limit
 - Players need to find the secret number within 10 seconds
 - If `asycio` isn't used, the program cannot terminate even if the time is over.
+
+### supplement
+- input() is blocking, so this program uses aioconsole.ainput() to use non-blocking input method.
