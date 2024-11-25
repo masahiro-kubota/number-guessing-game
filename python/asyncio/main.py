@@ -27,6 +27,7 @@ class number_guessing_game():
             async with asyncio.timeout(10):
                 await asyncio.gather(*tasks)
         except asyncio.CancelledError:
+            logger.info(f"Number of your responses is {self._num_of_response}")
             logger.info("Task is being Cancelled, cleaning up....")
         except TimeoutError:
             pass
@@ -34,18 +35,19 @@ class number_guessing_game():
     async def user_input(self):
         try:
             start_validate_time = time()
-            while True:
+            while self._num_of_response < 10:
                 player_input = await self.validate_input()
                 self._num_of_response += 1
                 if player_input == self._secret_number:
                     logger.info("Correct")
                     self._is_correct = True
-                    self._task2.cancel()
+                    self._task2.cancel() # TODO terminate the task group is more preferable or task2 should terminate in async_main
                     break
                 else:
                     logger.info("incorrect") 
                 finish_validate_time = time()
                 logger.info(f"elapsed input time{self._num_of_response}: {finish_validate_time - start_validate_time}")
+            self._task2.cancel() # TODO terminate the task group is more preferable or task2 should terminate in async_main
         except asyncio.CancelledError:
             pass
 
