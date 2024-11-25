@@ -20,9 +20,9 @@ class number_guessing_game():
         logger.info(f"elapsed_time: {elapsed_time}")
 
     async def async_main(self):
-        task1 = self.user_input()
-        task2 = self.provide_hint()
-        tasks = [task1, task2]
+        self._task1 = asyncio.create_task(self.user_input())
+        self._task2 = asyncio.create_task(self.provide_hint())
+        tasks = [self._task1, self._task2]
         try:
             async with asyncio.timeout(10):
                 await asyncio.gather(*tasks)
@@ -40,6 +40,7 @@ class number_guessing_game():
                 if player_input == self._secret_number:
                     logger.info("Correct")
                     self._is_correct = True
+                    self._task2.cancel()
                     break
                 else:
                     logger.info("incorrect") 
