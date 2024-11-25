@@ -17,7 +17,7 @@ class number_guessing_game():
         asyncio.run(self.async_main())
         self._finish_time = time()
         elapsed_time = self._finish_time - self._start_time
-        print(f"elapsed_time: {elapsed_time}")
+        logger.info(f"elapsed_time: {elapsed_time}")
 
     async def async_main(self):
         task1 = self.validate_input()
@@ -27,7 +27,7 @@ class number_guessing_game():
             async with asyncio.timeout(10):
                 await asyncio.gather(*tasks)
         except asyncio.CancelledError:
-            print("Task is being Cancelled, cleaning up....")
+            logger.info("Task is being Cancelled, cleaning up....")
         except TimeoutError:
             pass
 
@@ -41,13 +41,13 @@ class number_guessing_game():
                 self._num_of_respose += 1
                 player_input = int(player_input_raw)
                 if player_input == self._secret_number:
-                    print("Correct")
+                    logger.info("Correct")
                     self._is_correct = True
                     break
                 else:
-                    print("incorrect") 
+                    logger.info("incorrect") 
                 finish_validate_time = time()
-                print(f"elapsed input time{i}: {finish_validate_time - start_validate_time}")
+                logger.info(f"elapsed input time{i}: {finish_validate_time - start_validate_time}")
         except asyncio.CancelledError:
             pass
 
@@ -55,11 +55,11 @@ class number_guessing_game():
         i = 0
         while not self._is_correct:
             i += 1
-            print("Secret number is an even number!") if self._secret_number%2==0 else print("Secret number is an odd number!")
-            print(f"Number of your resposes is {self._num_of_respose}")
+            logger.info("Secret number is an even number!") if self._secret_number%2==0 else logger.info("Secret number is an odd number!")
+            logger.info(f"Number of your resposes is {self._num_of_respose}")
             await asyncio.sleep(1)
             finish_hint_time = time()
-            print(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
+            logger.info(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
 
 def load_logging_config(file, log_level):
     with open(file, 'r') as f:
@@ -70,7 +70,7 @@ def load_logging_config(file, log_level):
     return logger
     
 if __name__ == "__main__":
-    logger = load_logging_config('log_config.json', ERROR)
+    logger = load_logging_config('log_config.json', INFO)
     game = number_guessing_game()
 
 
