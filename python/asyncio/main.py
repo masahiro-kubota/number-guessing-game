@@ -1,10 +1,11 @@
 #! /usr/bin/env python3
 
 import asyncio
+from enum import Enum
 import json
 from logging import getLogger, ERROR, WARNING, INFO, DEBUG, config
-from time import time, sleep
 import random
+from time import time, sleep
 
 import aioconsole
 
@@ -13,6 +14,8 @@ class number_guessing_game():
     def __init__(self):
         self._start_time = time()
         self._secret_number = 42 # random.randint(1,100)
+        self._previous_answer = None
+        self._present_answer = None
         self._num_of_response = 0
         self._is_correct = False
     
@@ -27,7 +30,7 @@ class number_guessing_game():
         try:
             async with asyncio.TaskGroup() as group:
                 self._task1 = asyncio.create_task(self.user_input())
-                self._task2 = asyncio.create_task(self.provide_hint())
+                self._task2 = asyncio.create_task(self.provide_time_count())
                 tasks = [self._task1, self._task2]
                 try:
                     async with asyncio.timeout(10):
@@ -45,14 +48,16 @@ class number_guessing_game():
             start_validate_time = time()
             while self._num_of_response < 10:
                 player_input = await self.validate_input()
+                self._present_answer = player_input
                 self._num_of_response += 1
                 if player_input == self._secret_number:
                     logger.info("Correct")
                     self._is_correct = True
                     break
                 else:
-                    logger.info("incorrect") 
+                    self.give_hint(player_input)
                 finish_validate_time = time()
+                self._previous_answer = self._present_answer
                 logger.info(f"elapsed input time{self._num_of_response}: {finish_validate_time - start_validate_time}")
             logger.info(f"Number of your responses is {self._num_of_response}")
             raise TerminateTaskGroup()
@@ -76,15 +81,59 @@ class number_guessing_game():
                 else:
                     print("Please input an integer")
 
-    async def provide_hint(self):
+    def give_hint(self, user_answer):
+        # TODO 全角数字を入力したときの判定
+        if self._num_of_response != 1:
+            closer_farther_hint = self.give_closer_farther_hint(user_answer)
+            higher_lower_hint = self.give_higher_lower_hint(user_answer)
+            logger.info(f"{closer_farther_hint} {higher_lower_hint}")
+        else:
+            higher_lower_hint = self.give_higher_lower_hint(user_answer)
+            logger.info(higher_lower_hint)
+
+    def give_closer_farther_hint(self, user_answer):
+        previous_distance = abs(self._previous_answer - self._secret_number)
+        present_distance = abs(self._present_answer - self._secret_number)
+        closer_farther_comparison = compare(present_distance, previous_distance)
+        if closer_farther_comparison == comparison_result.LOW:
+            closer_farther_hint = "Getting closer!"
+        elif closer_farther_comparison == comparison_result.HIGH:
+            closer_farther_hint = "Getting farther!"
+        elif closer_farther_comparison == comparison_result.EQUAL:
+            closer_farther_hint = "The distance has not changed!"
+        return closer_farther_hint
+
+    def give_higher_lower_hint(self, user_answer):
+        higher_lower_comparison = compare(self._secret_number, user_answer)
+        if higher_lower_comparison == comparison_result.LOW:
+            higher_lower_hint = "Aim for a low number!"
+        elif higher_lower_comparison == comparison_result.HIGH:
+            higher_lower_hint = "Aim for a high number!"
+        elif higher_lower_comparison == comparison_result.EQUAL:
+            # Following message never show.
+            higher_lower_hint = "Now you know the correct answer, right?"
+        return higher_lower_hint
+
+    async def provide_time_count(self):
         i = 0
         while True:
-            i += 1
-            logger.info("Secret number is an even number!") if self._secret_number%2==0 else logger.info("Secret number is an odd number!")
-            logger.info(f"Number of your responses is {self._num_of_response}")
             await asyncio.sleep(1)
-            finish_hint_time = time()
-            logger.info(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
+            i += 1
+            logger.info(f"{i}sec have passed")
+            logger.info(f"Number of your responses is {self._num_of_response}")
+
+class comparison_result(Enum):
+    LOW = -1
+    EQUAL = 0
+    HIGH = 1
+
+def compare(a, b):
+    if a < b:
+        return comparison_result.LOW
+    elif a > b:
+        return comparison_result.HIGH
+    else:
+        return comparison_result.EQUAL
 
 class TerminateTaskGroup(Exception):
     """Exception raised to terminate a task group."""
