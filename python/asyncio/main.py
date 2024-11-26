@@ -51,7 +51,7 @@ class number_guessing_game():
         except asyncio.CancelledError:
             pass
 
-    async def validate_input(self):
+    async def validate_input(self): # TODO validate input
         player_input_raw = await aioconsole.ainput()
         player_input = int(player_input_raw)
         return player_input
