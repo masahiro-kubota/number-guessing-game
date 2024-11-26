@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import asyncio
+from contextvars import ContextVar, copy_context
 from enum import Enum
 import json
 from logging import getLogger, ERROR, WARNING, INFO, DEBUG, config
@@ -9,15 +10,16 @@ from time import time, sleep
 
 import aioconsole
 
+secret_number_var = ContextVar("secret_number", default=None)
 
 class number_guessing_game():
     def __init__(self):
         self._start_time = time()
-        self._secret_number = 42 # random.randint(1,100)
         self._previous_answer = None
         self._present_answer = None
         self._num_of_response = 0
         self._is_correct = False
+        secret_number_var.set(42) # random.randint(1,100)
     
     def run(self): #TODO add try, exception, finally syntax
         asyncio.run(self.async_main())
@@ -50,7 +52,7 @@ class number_guessing_game():
                 player_input = await self.validate_input()
                 self._present_answer = player_input
                 self._num_of_response += 1
-                if player_input == self._secret_number:
+                if player_input == secret_number_var.get():
                     logger.info("Correct")
                     self._is_correct = True
                     break
@@ -92,8 +94,8 @@ class number_guessing_game():
             logger.info(higher_lower_hint)
 
     def give_closer_farther_hint(self, user_answer):
-        previous_distance = abs(self._previous_answer - self._secret_number)
-        present_distance = abs(self._present_answer - self._secret_number)
+        previous_distance = abs(self._previous_answer - secret_number_var.get())
+        present_distance = abs(self._present_answer - secret_number_var.get())
         closer_farther_comparison = compare(present_distance, previous_distance)
         if closer_farther_comparison == comparison_result.LOW:
             closer_farther_hint = "Getting closer!"
@@ -104,7 +106,7 @@ class number_guessing_game():
         return closer_farther_hint
 
     def give_higher_lower_hint(self, user_answer):
-        higher_lower_comparison = compare(self._secret_number, user_answer)
+        higher_lower_comparison = compare(secret_number_var.get(), user_answer)
         if higher_lower_comparison == comparison_result.LOW:
             higher_lower_hint = "Aim for a low number!"
         elif higher_lower_comparison == comparison_result.HIGH:
@@ -150,6 +152,7 @@ def load_logging_config(file, log_level=INFO, formatter="simple"):
     
 if __name__ == "__main__":
     logger = load_logging_config('log_config.json')
+    game_var = ContextVar("request_id", default=None)
     game = number_guessing_game()
     game.run()
 
