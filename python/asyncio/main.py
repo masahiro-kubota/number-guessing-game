@@ -60,9 +60,21 @@ class number_guessing_game():
             pass
 
     async def validate_input(self): # TODO validate input
-        player_input_raw = await aioconsole.ainput()
-        player_input = int(player_input_raw)
-        return player_input
+        while True:
+            try: 
+                player_input_raw = await aioconsole.ainput()
+                player_input_float = float(player_input_raw)
+            except ValueError:
+                print("Please input a number")
+            else:
+                if player_input_float.is_integer():
+                    player_input = int(player_input_float)
+                    if player_input > 0 and player_input < 101:
+                        return player_input
+                    else:
+                        print("Please input a number between 1 and 100")
+                else:
+                    print("Please input an integer")
 
     async def provide_hint(self):
         i = 0
