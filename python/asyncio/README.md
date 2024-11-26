@@ -12,6 +12,7 @@
   - In python, to kill blocking is difficult. 
 
 ```
+uv sync
 . .venv/bin/activate
 ./main.py
 ```

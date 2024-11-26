@@ -29,7 +29,7 @@ class number_guessing_game():
                 try:
                     async with asyncio.timeout(10):
                         await asyncio.gather(*tasks)
-                except asyncio.CancelledError:
+                except asyncio.CancelledError: # When signal.SIGINT is raised by Ctrl+C
                     logger.info(f"Number of your responses is {self._num_of_response}")
                     logger.info("Task is being Cancelled, cleaning up....")
                 except TimeoutError:
@@ -46,7 +46,7 @@ class number_guessing_game():
                 if player_input == self._secret_number:
                     logger.info("Correct")
                     self._is_correct = True
-                    raise TerminateTaskGroup()
+                    break
                 else:
                     logger.info("incorrect") 
                 finish_validate_time = time()
@@ -63,7 +63,7 @@ class number_guessing_game():
 
     async def provide_hint(self):
         i = 0
-        while not self._is_correct:
+        while True:
             i += 1
             logger.info("Secret number is an even number!") if self._secret_number%2==0 else logger.info("Secret number is an odd number!")
             logger.info(f"Number of your responses is {self._num_of_response}")
@@ -72,6 +72,7 @@ class number_guessing_game():
             logger.info(f"elapsed hint time{i}: {finish_hint_time - self._start_time}") 
 
 class TerminateTaskGroup(Exception):
+    """Exception raised to terminate a task group."""
     pass
 
 def load_logging_config(file, log_level):
