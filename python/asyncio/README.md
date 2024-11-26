@@ -12,5 +12,6 @@
   - In python, to kill blocking is difficult. 
 
 ```
+. .venv/bin/activate
 ./main.py
 ```
