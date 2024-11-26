@@ -139,16 +139,17 @@ class TerminateTaskGroup(Exception):
     """Exception raised to terminate a task group."""
     pass
 
-def load_logging_config(file, log_level):
+def load_logging_config(file, log_level=INFO, formatter="simple"):
     with open(file, 'r') as f:
         log_conf = json.load(f)
-    log_conf["handlers"]["consoleHandler"]["level"] = log_level
+    log_conf["handlers"]["consoleHandler"]["level"] = log_level # DEBUG, INFO, WARN, ERROR
+    log_conf["handlers"]["consoleHandler"]["formatter"] = formatter # "simple", "detailed"
     config.dictConfig(log_conf)
     logger = getLogger(__name__)
     return logger
     
 if __name__ == "__main__":
-    logger = load_logging_config('log_config.json', INFO)
+    logger = load_logging_config('log_config.json')
     game = number_guessing_game()
     game.run()
 
