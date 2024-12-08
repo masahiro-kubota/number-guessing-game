@@ -1,6 +1,4 @@
-const greeting = document.getElementById("greeting");
-greeting.textContent = "Hello World!"
-
+// inputNumFormのsubmitボタンが押されるとhanlerFormSubmitがイベントコールされる 
 // eventは送信されたeventオブジェクト
 document.getElementById("inputNumForm").addEventListener("submit", handleFormSubmit);
 
