@@ -1,6 +1,7 @@
 function handleFormSubmit(event){
   event.preventDefault();
-  console.log(event.type);
+  const input_num  = document.getElementById("input_num").value
+  info.textContent = `Your answer is ${input_num}`;
 }
 
 function main(){
