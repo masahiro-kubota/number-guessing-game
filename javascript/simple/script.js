@@ -1,5 +1,4 @@
 function handleFormSubmit(event){
-  const secret_number = 100;
   event.preventDefault();
   const info = document.getElementById("info");
   const input_num  = document.getElementById("input_num").value;
@@ -10,10 +9,13 @@ function handleFormSubmit(event){
   }
 }
 
+const secret_number = 80;
+
+
 function main(){
   // inputNumFormのsubmitボタンが押されるとhanlerFormSubmitがイベントコールされる 
   // eventは送信されたeventオブジェクト
-  let input_num = document.getElementById("inputNumForm").addEventListener("submit", handleFormSubmit);
+ document.getElementById("inputNumForm").addEventListener("submit", handleFormSubmit);
 }
 
 window.addEventListener("DOMContentLoaded", main);
