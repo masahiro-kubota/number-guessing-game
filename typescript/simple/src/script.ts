@@ -75,6 +75,10 @@ class GameLogic {
     this.#gameData = this.#storage.load();
   }
 
+  getLastNumber(){
+    return this.#gameData[this.#gameData.length - 1].number
+  }
+
   isMaxCount(count){
     return (this.#maxCount === count) ? true : false; 
   }
@@ -90,9 +94,20 @@ class GameLogic {
     this.#gameData.push(data);
     this.#storage.save(this.#gameData);
   }
+
+  relativeDistance(number){
+    const previousNumber = this.getLastNumber();
+    const previousDistance = Math.abs(this.#secretNumber - previousNumber);
+    const latestDistance = Math.abs(this.#secretNumber - number);
+    return previousDistance === latestDistance
+      ? ComparisonResult.NOTCHANGE
+      : previousDistance > latestDistance
+      ? ComparisonResult.CLOSER
+      : ComparisonResult.FARTHER;
+  }
   
   checkInput(input){
-    const count = Object.keys(this.#gameData).length;
+    const count = this.#gameData.length;
     if (isNaN(input)) {
       return `Your input is not Number. Count is ${count}`;
     } 
@@ -100,15 +115,37 @@ class GameLogic {
     if (number < 1 || 100 < number){
       return `You need to input the number from 1 to 100. Count is ${count}`;
     }
+    if (this.isNumCorrect(number)){
+      this.restartGame();
+      return `${this.#secretNumber} is the secret number. Count is ${count + 1}`;
+    }
     if (this.isMaxCount(count + 1)){
       this.restartGame();
       return `The max attempts has been reached. Secret Number is ${this.#secretNumber}` ;
     }
+    let relativeDistanceReply;
+    if (count === 0){
+      relativeDistanceReply = "";
+    } else {
+      relativeDistanceReply = (this.relativeDistance(number) === ComparisonResult.NOTCHANGE)
+        ? 'Equal Distance!'
+        : (this.relativeDistance(number) === ComparisonResult.CLOSER)
+        ? 'Closer!'
+        : 'Farther!';
+    }
     this.appendNumber(number);
-    return this.isNumCorrect(number)
-      ? `${this.#secretNumber} is the secret number. Count is ${count + 1}`
-      : `${number} is not correct. Count is ${count + 1}`;
+    if (number < this.#secretNumber){
+      return `${relativeDistanceReply} Go higher! Count is ${count + 1}`;
+    } else if (number > this.#secretNumber){
+      return `${relativeDistanceReply} Go smaller! Count is ${count + 1}`;
+    }
   }
+}
+
+class ComparisonResult {
+  static CLOSER = -1;
+  static NOTCHANGE = 0;
+  static FARTHER = 1;
 }
 
 // 抽象化されたUIのイベントにロジックを割り当てるアダプター。
