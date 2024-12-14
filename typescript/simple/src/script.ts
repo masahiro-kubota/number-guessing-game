@@ -53,7 +53,6 @@ class GameDomService {
   }
 
   setAddResetListener(callback) {
-    console.log('hello');
     this.#resetButton.addEventListener('click', callback);
   }
 }
@@ -63,10 +62,12 @@ class GameLogic {
   #secretNumber;
   #storage;
   #gameData;
-  constructor(storage, secretNumber){
+  #maxCount;
+  constructor(storage, secretNumber, maxCount){
   this.#secretNumber = secretNumber;
   this.#storage = storage;
   this.#gameData = this.#storage.load();
+  this.#maxCount = maxCount;
   }
 
   restartGame(){
@@ -74,30 +75,39 @@ class GameLogic {
     this.#gameData = this.#storage.load();
   }
 
+  isMaxCount(count){
+    return (this.#maxCount === count) ? true : false; 
+  }
 
-  checkNumber(input){
-    let reply;
-    if (!isNaN(input)) {
-      const number = Number(input);
-      if (1 <= number && number <= 100){
-        const data = {
-          'number': number
-        };
-        this.#gameData.push(data);
-        this.#storage.save(this.#gameData);
-        const isNumCorrect = (this.#secretNumber === number) ? true : false;
-        if (isNumCorrect) {
-          reply = `${this.#secretNumber} is the secret number.`;
-        } else { 
-          reply = `${number} is not correct.`;
-        }
-      } else {
-        reply = 'You need to inpur the nuber from 1 to 100.';
-      }
-    } else {
-       reply = 'Your input is not Number.';
+  isNumCorrect(number){
+    return (this.#secretNumber === number) ? true : false;
+  }
+
+  appendNumber(number){
+    const data = {
+      'number': number
+    };
+    this.#gameData.push(data);
+    this.#storage.save(this.#gameData);
+  }
+  
+  checkInput(input){
+    const count = Object.keys(this.#gameData).length;
+    if (isNaN(input)) {
+      return `Your input is not Number. Count is ${count}`;
+    } 
+    const number = Number(input);
+    if (number < 1 || 100 < number){
+      return `You need to input the number from 1 to 100. Count is ${count}`;
     }
-    return  reply + ` Count is ${Object.keys(this.#gameData).length}`;
+    if (this.isMaxCount(count + 1)){
+      this.restartGame();
+      return `The max attempts has been reached. Secret Number is ${this.#secretNumber}` ;
+    }
+    this.appendNumber(number);
+    return this.isNumCorrect(number)
+      ? `${this.#secretNumber} is the secret number. Count is ${count + 1}`
+      : `${number} is not correct. Count is ${count + 1}`;
   }
 }
 
@@ -112,7 +122,7 @@ class GameUIAdapter {
     this.#domService.setAddInputListener(() => {
       event.preventDefault();
       const input = this.#domService.getInputNum();
-      const reply = this.#logic.checkNumber(input);
+      const reply = this.#logic.checkInput(input);
       this.#domService.setReply(reply);
       this.#domService.setInputNum('');
     });
@@ -128,9 +138,10 @@ class GameUIAdapter {
 class GameApp {
   static initialize(){
     const secretNumber = 49;
+    const maxCount = 7;
     const storage = new LocalStorageGameStorage('my-game');
     const domService = new GameDomService();
-    const gameLogic = new GameLogic(storage, secretNumber);
+    const gameLogic = new GameLogic(storage, secretNumber, maxCount);
     const gameUIAdapter = new GameUIAdapter(gameLogic, domService);
     return {
       logic: gameLogic,
