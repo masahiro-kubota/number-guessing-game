@@ -1,7 +1,24 @@
-// データの永続化
+// データの永続化 localStorageはweb APIで定義されているグローバルオブジェクト
 class LocalStorageGameStorage {
-}
+  #storageKey;
+  constructor(storageKey='my-game') {
+    this.#storageKey = storageKey;
+    localStorage.setItem('count', 0);
+  }
 
+  save(data) {
+    localStorage.setItem(this.#storageKey, JSON.stringify(data));
+  }
+
+  load() {
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : [];
+  }
+
+  getCount() {
+    return localStorage.getItem(this.storageKey, 'count');
+  }
+}
 
 // DOM操作の抽象化を行う
 class GameDomService {
@@ -12,7 +29,7 @@ class GameDomService {
   }
 
   getInputNum(){
-    return this.inputNum.value;
+    return Number(this.inputNum.value);
   }
 
   setReply(reply){
@@ -27,23 +44,28 @@ class GameDomService {
 // 状態管理やロジックを管理する一番核となる部分。CUIだけならここのロジックだけで動く感じ。
 class GameLogic {
   #secretNumber;
+  #storage;
+  #gameData;
   constructor(storage, secretNumber){
   this.#secretNumber = secretNumber;
+  this.#storage = storage;
+  this.#gameData = this.#storage.load();
   }
 
-  verifyNumber(number){
-    if (this.#secretNumber == number){
-      return true;
-    } else {
-      return false;
-    }
+  checkNumber(number){
+    const data = {
+      'number': number
+    };
+    this.#gameData.push(data);
+    this.#storage.save(this.#gameData);
+    return (this.#secretNumber === number) ? true : false;
   }
 
   createReply(isNumCorrect, number) {
     if (isNumCorrect) {
-      return `${this.#secretNumber} is the secret number`;
-    } else {
-      return `${number} is not correct`;
+      return `${this.#secretNumber} is the secret number. Count is ${Object.keys(this.#gameData).length}`;
+    } else { 
+      return `${number} is not correct. Count is ${Object.keys(this.#gameData).length}`;
     }
   }
 }
@@ -59,7 +81,7 @@ class GameUIAdapter {
     this.#domService.setAddInputListener(() => {
       event.preventDefault();
       const number = this.#domService.getInputNum();
-      const check = this.#logic.verifyNumber(number);
+      const check = this.#logic.checkNumber(number);
       const reply = this.#logic.createReply(check, number);
       this.#domService.setReply(reply);
       }
@@ -82,13 +104,5 @@ class GameApp {
   }
 }
 
-
 const app = GameApp.initialize();
-
-
-
-
-
-
-
 
