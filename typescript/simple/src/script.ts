@@ -41,7 +41,7 @@ class GameDomService {
   }
 }
 
-// 状態管理やロジックを管理する一番核となる部分。CUIだけならここのロジックだけで動く感じ。
+// 状態管理やロジックを管理する一番核となる部分。異なるUIの場合でもここは変わらないようにする
 class GameLogic {
   #secretNumber;
   #storage;
@@ -52,21 +52,23 @@ class GameLogic {
   this.#gameData = this.#storage.load();
   }
 
-
-
   checkNumber(input){
     if (!isNaN(input)) {
       const number = Number(input);
-      const data = {
-        'number': number
-      };
-      this.#gameData.push(data);
-      this.#storage.save(this.#gameData);
-      const isNumCorrect = (this.#secretNumber === number) ? true : false;
-      if (isNumCorrect) {
-        return `${this.#secretNumber} is the secret number. Count is ${Object.keys(this.#gameData).length}`;
-      } else { 
-        return `${number} is not correct. Count is ${Object.keys(this.#gameData).length}`;
+      if (1 <= number && number <= 100){
+        const data = {
+          'number': number
+        };
+        this.#gameData.push(data);
+        this.#storage.save(this.#gameData);
+        const isNumCorrect = (this.#secretNumber === number) ? true : false;
+        if (isNumCorrect) {
+          return `${this.#secretNumber} is the secret number. Count is ${Object.keys(this.#gameData).length}`;
+        } else { 
+          return `${number} is not correct. Count is ${Object.keys(this.#gameData).length}`;
+        }
+      } else {
+        return 'You need to inpur the nuber from 1 to 100.'
       }
     } else {
       return 'Your input is not Number.'
