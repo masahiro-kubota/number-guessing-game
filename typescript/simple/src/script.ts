@@ -52,20 +52,24 @@ class GameLogic {
   this.#gameData = this.#storage.load();
   }
 
-  checkNumber(number){
-    const data = {
-      'number': number
-    };
-    this.#gameData.push(data);
-    this.#storage.save(this.#gameData);
-    return (this.#secretNumber === number) ? true : false;
-  }
 
-  createReply(isNumCorrect, number) {
-    if (isNumCorrect) {
-      return `${this.#secretNumber} is the secret number. Count is ${Object.keys(this.#gameData).length}`;
-    } else { 
-      return `${number} is not correct. Count is ${Object.keys(this.#gameData).length}`;
+
+  checkNumber(input){
+    if (!isNaN(input)) {
+      const number = Number(input);
+      const data = {
+        'number': number
+      };
+      this.#gameData.push(data);
+      this.#storage.save(this.#gameData);
+      const isNumCorrect = (this.#secretNumber === number) ? true : false;
+      if (isNumCorrect) {
+        return `${this.#secretNumber} is the secret number. Count is ${Object.keys(this.#gameData).length}`;
+      } else { 
+        return `${number} is not correct. Count is ${Object.keys(this.#gameData).length}`;
+      }
+    } else {
+      return 'Your input is not Number.'
     }
   }
 }
@@ -80,9 +84,8 @@ class GameUIAdapter {
     this.#domService = domService;
     this.#domService.setAddInputListener(() => {
       event.preventDefault();
-      const number = this.#domService.getInputNum();
-      const check = this.#logic.checkNumber(number);
-      const reply = this.#logic.createReply(check, number);
+      const input = this.#domService.getInputNum();
+      const reply = this.#logic.checkNumber(input);
       this.#domService.setReply(reply);
       }
     );
