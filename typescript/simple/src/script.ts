@@ -1,94 +1,96 @@
+type numberInput = {number: number};
+type inputData = numberInput[];
+
 // データの永続化 localStorageはweb APIで定義されているグローバルオブジェクト
 class LocalStorageGameStorage {
-  #storageKey;
-  constructor(storageKey = 'my-game') {
+  #storageKey: string;
+  constructor(storageKey: string = 'my-game') {
     this.#storageKey = storageKey;
   }
 
-  save(data) {
+  save(data: inputData): void {
     localStorage.setItem(this.#storageKey, JSON.stringify(data));
   }
 
-  load() {
-    const data = localStorage.getItem(this.#storageKey);
-    return data ? JSON.parse(data) : [];
+  load(): inputData {
+    const dataString: string | null  = localStorage.getItem(this.#storageKey);
+    return dataString ? JSON.parse(dataString) : [];
   }
 
-
-  getCount() {
-    return localStorage.getItem(this.storageKey, 'count');
-  }
-
-  resetGame() {
+  resetGame(): void {
     localStorage.removeItem(this.#storageKey);
   }
 }
 
 // DOM操作の抽象化を行う
 class GameDomService {
-  #info;
-  #inputNum;
-  #inputNumForm;
-  #resetButton;
+  #info: HTMLElement;
+  #inputNum: HTMLInputElement;
+  #inputNumForm: HTMLFormElement;
+  #resetButton: HTMLButtonElement;
   constructor(){
-    this.#info = document.getElementById('info');
-    this.#inputNum = document.getElementById('input_num');
-    this.#inputNumForm = document.getElementById('inputNumForm');
-    this.#resetButton = document.getElementById('resetButton');
+    this.#info = document.getElementById('info') as HTMLElement;
+    this.#inputNum = document.getElementById('input_num') as HTMLInputElement;
+    this.#inputNumForm = document.getElementById('inputNumForm') as HTMLFormElement;
+    this.#resetButton = document.getElementById('resetButton') as HTMLButtonElement;
   }
 
-  getInputNum(){
-    return Number(this.#inputNum.value);
+  getInputNum(): number{
+    if (this.#inputNum) {
+      return Number(this.#inputNum.value);
+    } else {
+      throw new Error('Input element is not initialized');
+    }
   }
 
-  setInputNum(value){
+  setInputNum(value: string): void{
     this.#inputNum.value = value;
   }
 
-  setReply(reply){
-    this.#info.textContent = reply;
+  setReply(reply: string): void{
+    this.#info!.textContent = reply;
   }
 
-  setAddInputListener(callback) {
+  setAddInputListener(callback: (event: Event) => void): void {
     this.#inputNumForm.addEventListener('submit', callback);
   }
 
-  setAddResetListener(callback) {
+  setAddResetListener(callback: () => void): void {
     this.#resetButton.addEventListener('click', callback);
   }
 }
 
 // 状態管理やロジックを管理する一番核となる部分。異なるUIの場合でもここは変わらないようにする
 class GameLogic {
-  #secretNumber;
-  #storage;
-  #gameData;
-  #maxCount;
-  constructor(storage, secretNumber, maxCount){
+  #secretNumber: number;
+  #storage: LocalStorageGameStorage;
+  #gameData: inputData;
+  #maxCount: number;
+  constructor(storage: LocalStorageGameStorage, secretNumber: number, maxCount: number){
   this.#secretNumber = secretNumber;
   this.#storage = storage;
   this.#gameData = this.#storage.load();
   this.#maxCount = maxCount;
   }
 
-  restartGame(){
+  restartGame(): void{
     this.#storage.resetGame();
     this.#gameData = this.#storage.load();
   }
 
-  getLastNumber(){
+  getLastNumber(): number{
     return this.#gameData[this.#gameData.length - 1].number
   }
 
-  isMaxCount(count){
+  isMaxCount(count: number): boolean{
     return (this.#maxCount === count) ? true : false; 
   }
 
-  isNumCorrect(number){
+  isNumCorrect(number: number): boolean{
     return (this.#secretNumber === number) ? true : false;
   }
 
-  appendNumber(number){
+  appendNumber(number: number): void{
     const data = {
       'number': number
     };
@@ -96,7 +98,7 @@ class GameLogic {
     this.#storage.save(this.#gameData);
   }
 
-  relativeDistance(number){
+  relativeDistance(number: number): ComparisonResult{
     const previousNumber = this.getLastNumber();
     const previousDistance = Math.abs(this.#secretNumber - previousNumber);
     const latestDistance = Math.abs(this.#secretNumber - number);
@@ -107,12 +109,12 @@ class GameLogic {
       : ComparisonResult.FARTHER;
   }
   
-  checkInput(input){
-    const count = this.#gameData.length;
+  checkInput(input: number): string{
+    const count: number = this.#gameData.length;
     if (isNaN(input)) {
       return `Your input is not Number. Count is ${count}`;
     } 
-    const number = Number(input);
+    const number: number = Number(input);
     if (number < 1 || 100 < number){
       return `You need to input the number from 1 to 100. Count is ${count}`;
     }
@@ -139,25 +141,27 @@ class GameLogic {
       return `${relativeDistanceReply} Go higher! Count is ${count + 1}`;
     } else if (number > this.#secretNumber){
       return `${relativeDistanceReply} Go smaller! Count is ${count + 1}`;
+    } else {
+      return 'Error: Unexpected input. Please enter a valid number.';
     }
   }
 }
 
-class ComparisonResult {
-  static CLOSER = -1;
-  static NOTCHANGE = 0;
-  static FARTHER = 1;
+enum ComparisonResult {
+  CLOSER = -1,
+  NOTCHANGE = 0,
+  FARTHER = 1,
 }
 
 // 抽象化されたUIのイベントにロジックを割り当てるアダプター。
 class GameUIAdapter {
-  #logic;
-  #domService;
+  #logic: GameLogic;
+  #domService: GameDomService;
 
-  constructor(logic, domService){
+  constructor(logic: GameLogic, domService: GameDomService){
     this.#logic = logic;
     this.#domService = domService;
-    this.#domService.setAddInputListener(() => {
+    this.#domService.setAddInputListener((event: Event) => {
       event.preventDefault();
       const input = this.#domService.getInputNum();
       const reply = this.#logic.checkInput(input);
@@ -188,5 +192,5 @@ class GameApp {
   }
 }
 
-const app = GameApp.initialize();
+GameApp.initialize();
 

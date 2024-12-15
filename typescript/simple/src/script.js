@@ -21,7 +21,7 @@ var LocalStorageGameStorage = /** @class */ (function () {
         localStorage.setItem(__classPrivateFieldGet(this, _LocalStorageGameStorage_storageKey, "f"), JSON.stringify(data));
     };
     LocalStorageGameStorage.prototype.load = function () {
-        var data = localStorage.getItem(this.storageKey);
+        var data = localStorage.getItem(__classPrivateFieldGet(this, _LocalStorageGameStorage_storageKey, "f"));
         return data ? JSON.parse(data) : [];
     };
     LocalStorageGameStorage.prototype.getCount = function () {
