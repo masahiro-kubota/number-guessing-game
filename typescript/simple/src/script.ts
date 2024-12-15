@@ -1,7 +1,7 @@
 // データの永続化 localStorageはweb APIで定義されているグローバルオブジェクト
 class LocalStorageGameStorage {
   #storageKey;
-  constructor(storageKey='my-game') {
+  constructor(storageKey = 'my-game') {
     this.#storageKey = storageKey;
   }
 
@@ -10,9 +10,10 @@ class LocalStorageGameStorage {
   }
 
   load() {
-    const data = localStorage.getItem(this.storageKey);
+    const data = localStorage.getItem(this.#storageKey);
     return data ? JSON.parse(data) : [];
   }
+
 
   getCount() {
     return localStorage.getItem(this.storageKey, 'count');

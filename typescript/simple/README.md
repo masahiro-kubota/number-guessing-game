@@ -1,4 +1,9 @@
 ```
+#型チェック
+tsc --watch
+```
+
+```
 npm install
 npm run dev
 ```
