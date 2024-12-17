@@ -1,0 +1,27 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{html,js,ts,jsx,tsx}"
+  ],
+  theme: {
+    extend: {
+      // フォントファミリーの拡張
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+      // カスタムカラーの追加
+      colors: {
+        primary: '#646cff',
+        'primary-hover': '#535bf2',
+      },
+      // ドロップシャドウの設定を追加
+      dropShadow: {
+        'vite': '0 0 2em #646cffaa',
+        'vue': '0 0 2em #42b883aa',
+      },
+    },
+  },
+  plugins: [],
+}
+
