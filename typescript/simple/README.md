@@ -1,5 +1,7 @@
 ```
 #サーバー起動
+nvm install
+nvm use
 npm install
 npm run dev
 ```
