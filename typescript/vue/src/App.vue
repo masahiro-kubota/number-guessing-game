@@ -1,54 +1,53 @@
-<script lang="ts">
+<script lang='ts'>
+import { ComparisonResult } from './enums/ComparisonResult';
+import { numberInput } from './types/index';
+import { GameLogic } from './logic/GameLogic';
+import { LocalStorageGameStorage } from './logic/GameStorage'; 
+
 export default {
-  data() {
+  data(): {gameLogic: GameLogic | null, storage: LocalStorageGameStorage | null, reply: string, inputNum: number | null} {
     return {
-      count: 0,
+      gameLogic: null,
+      storage: null,
+      reply: 'Enter a number',
+      inputNum: null,
+    }
+  },
+  mounted() {
+    const secretNumber: number = 49;
+    const maxCount: number = 7;
+    this.storage = new LocalStorageGameStorage('my-game');
+    this.gameLogic = new GameLogic(this.storage, secretNumber, maxCount);
+  },
+  methods: {
+    handleSubmit() {
+      console.log(this.secretNumber);
+      this.reply = this.gameLogic.checkInput(this.inputNum);
+      this.inpuNum = 0; 
+    },
+    handleReset() {
+      console.log('test2');
+      if (!this.gameLogic) return;
+      this.gameLogic.restartGame();
+      this.reply = 'Reset';
+      this.inputNum = 0;
     }
   }
 }
+
 </script>
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo h-32 p-6" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue h-32 p-6" alt="Vue logo" />
-    </a>
+    <h1>Number Guessing Game</h1>
+    <form @submit.prevent='handleSubmit' class='space-x-4'>
+      <input v-model='inputNum' placeholder='e.g., 99' required>
+      <button type='submit' class='bg-blue-500'>Submit</button>
+    </form>
+    <div>
+        <p>{{ reply }}</p>
+    </div>
+    <button @click='handleReset' class='bg-blue-500'>Reset Attempts</button>
   </div>
-  <h1 class="text-9xl font-thin italic animate-bounce">"Vite + Vue"</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs text-gray-400">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<style scoped>
-.logo {
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
