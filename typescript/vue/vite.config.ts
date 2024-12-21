@@ -7,6 +7,7 @@ export default defineConfig({
   root: '.', // プロジェクトのルート
   server: {
     port: 3000, // 開発サーバーのポート番号
+    open: true,
     },
   plugins: [
     vue(),
