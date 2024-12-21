@@ -38,16 +38,30 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h1>Number Guessing Game</h1>
-    <form @submit.prevent='handleSubmit' class='space-x-4'>
-      <input v-model='inputNum' placeholder='e.g., 99' required>
-      <button type='submit' class='bg-blue-500'>Submit</button>
+  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
+    <h1 class="text-3xl font-bold mb-4">Number Guessing Game</h1>
+    <form @submit.prevent="handleSubmit" class="flex space-x-2 mb-4">
+      <input
+        v-model="inputNum"
+        placeholder="e.g., 99"
+        required
+        class="border rounded px-2 py-1 text-lg"
+      />
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-3 py-1 rounded text-lg"
+      >
+        Submit
+      </button>
     </form>
-    <div>
-        <p>{{ reply }}</p>
+    <div class="mb-4">
+      <p>{{ reply }}</p>
     </div>
-    <button @click='handleReset' class='bg-blue-500'>Reset Attempts</button>
+    <button
+      @click="handleReset"
+      class="bg-blue-500 text-white px-3 py-1 rounded text-lg"
+    >
+      Reset
+    </button>
   </div>
 </template>
-
