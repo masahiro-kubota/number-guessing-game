@@ -179,8 +179,8 @@ class GameUIAdapter {
 // アプリケーションの初期化と依存性注入(Dependency Injection)
 class GameApp {
   static initialize(){
-    const secretNumber = 49;
-    const maxCount = 7;
+    const secretNumber: number = 49;
+    const maxCount: number = 7;
     const storage = new LocalStorageGameStorage('my-game');
     const domService = new GameDomService();
     const gameLogic = new GameLogic(storage, secretNumber, maxCount);
