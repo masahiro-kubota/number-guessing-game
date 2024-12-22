@@ -1,5 +1,5 @@
 # Vue 3 + TypeScript + Vite + Tailwind CSS
-
+Underconstruction
 UIに密接に関連する処理と初期化はApp.vueに含める。
 ロジックやユーティリティ的な部分は別ファイルに分離する。
 UIアダプターはinputとresetのイベントリスナーの設定だから、mountオプションで設定する
