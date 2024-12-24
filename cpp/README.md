@@ -3,6 +3,7 @@ Underconstruction
 ```
 # use make
 make
+./main
 ```
 
 ```
@@ -10,4 +11,6 @@ make
 mkdir build 
 cd build
 cmake ..
+make
+./main
 ```
