@@ -10,4 +10,4 @@ make
 mkdir build 
 cd build
 cmake ..
-``
+```
