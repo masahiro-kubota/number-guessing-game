@@ -11,6 +11,6 @@ make
 mkdir build 
 cd build
 cmake ..
-make
+cmake --build . #make
 ./main
 ```
