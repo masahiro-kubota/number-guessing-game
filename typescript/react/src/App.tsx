@@ -1,9 +1,15 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function Square({ value, onSquareClick }) {
+type FixedLengthArray<T, L extends number, R extends T[] = []> = 
+  R['length'] extends L ? R : FixedLengthArray<T, L, [T, ...R]>;
+
+type SquareProps = {
+  value: string | null;
+  onSquareClick: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+function Square({ value, onSquareClick }: SquareProps): JSX.Element {
   return (
     <button 
       className="square"
@@ -14,8 +20,16 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-function Board({ xIsNext, squares, onPlay }) {
-  function handleClick(i) {
+type NineElementArray = FixedLengthArray<(string | null), 9>;
+
+type BoardProps = {
+  xIsNext: boolean;
+  squares: NineElementArray;
+  onPlay: any;
+} 
+
+function Board({ xIsNext, squares, onPlay }: BoardProps): JSX.Element{
+  function handleClick(i: number): void {
     if (squares[i] || calculateWinner(squares)) {
       return;
     }
@@ -38,14 +52,14 @@ function Board({ xIsNext, squares, onPlay }) {
     <>
       <div className="status">{status}</div>
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={()=>handleClick(0)}/>
-        <Square value={squares[1]} onSquareClick={()=>handleClick(1)}/>
-        <Square value={squares[2]} onSquareClick={()=>handleClick(2)}/>
+        <Square value={squares[0] ?? null} onSquareClick={()=>handleClick(0)}/>
+        <Square value={squares[1] ?? null} onSquareClick={()=>handleClick(1)}/>
+        <Square value={squares[2] ?? null} onSquareClick={()=>handleClick(2)}/>
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onSquareClick={()=>handleClick(3)}/>
-        <Square value={squares[4]} onSquareClick={()=>handleClick(4)}/>
-        <Square value={squares[5]} onSquareClick={()=>handleClick(5)}/>
+        <Square value={squares[3] ?? null} onSquareClick={()=>handleClick(3)}/>
+        <Square value={squares[4] ?? null} onSquareClick={()=>handleClick(4)}/>
+        <Square value={squares[5] ?? null} onSquareClick={()=>handleClick(5)}/>
       </div>
       <div className="board-row">
         <Square value={squares[6]} onSquareClick={()=>handleClick(6)}/>
@@ -56,23 +70,23 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
-export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
+export default function Game(): JSX.Element {
+  const [history, setHistory] = useState<NineElementArray[]>([Array(9).fill(null) as NineElementArray]);
+  const [currentMove, setCurrentMove] = useState<number>(0);
   const xIsNext = currentMove % 2 == 0;
-  const currentSquares = history[currentMove];
+  const currentSquares = history[currentMove] ?? (() => { throw new Error(`Invalid currentMove: ${currentMove}`);})();
 
-  function handlePlay(nextSquares) {
+  function handlePlay(nextSquares: NineElementArray): void {
     const nextHistory =  [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
   
-  function jumpTo(nextMove) {
+  function jumpTo(nextMove: number): void {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((square, move) => {
+  const moves = history.map((_, move: number): JSX.Element => {
     let description;
     if (move > 0) {
       description = 'Go to move #' + move;
@@ -97,7 +111,7 @@ export default function Game() {
   );
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares: NineElementArray): string | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -109,9 +123,10 @@ function calculateWinner(squares) {
     [2, 4, 6]
 ];
   for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+    const [a, b, c] = lines[i] as [number, number, number];
     if (squares[a] && squares[a]==squares[b] && squares[a]==squares[c]) {
-      return squares[a];
-    }
+      return squares[a] as string | null;
+    } 
   }
+  return null;
 }
