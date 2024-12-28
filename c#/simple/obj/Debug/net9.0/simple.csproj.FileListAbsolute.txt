@@ -1,0 +1,15 @@
+/home/masa/Documents/number-guessing-game/c#/simple/bin/Debug/net9.0/simple
+/home/masa/Documents/number-guessing-game/c#/simple/bin/Debug/net9.0/simple.deps.json
+/home/masa/Documents/number-guessing-game/c#/simple/bin/Debug/net9.0/simple.runtimeconfig.json
+/home/masa/Documents/number-guessing-game/c#/simple/bin/Debug/net9.0/simple.dll
+/home/masa/Documents/number-guessing-game/c#/simple/bin/Debug/net9.0/simple.pdb
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.GeneratedMSBuildEditorConfig.editorconfig
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.AssemblyInfoInputs.cache
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.AssemblyInfo.cs
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.csproj.CoreCompileInputs.cache
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.sourcelink.json
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.dll
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/refint/simple.dll
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.pdb
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/simple.genruntimeconfig.cache
+/home/masa/Documents/number-guessing-game/c#/simple/obj/Debug/net9.0/ref/simple.dll
