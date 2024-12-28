@@ -1,21 +1,14 @@
 namespace NumberGuessingGame.Models {
     public class ValidationResult<T> {
-        public bool IsValid { get; }
-        public T? Value {get; }
-        public string? ErrorMessage {get; }
-    
-        private ValidationResult(bool isValid, T? value, string? errorMessage) {
-            IsValid = isValid;
-            Value = value;
-            ErrorMessage = errorMessage;
-        }
+        public bool IsValid { get; init; }
+        public T? Value {get; init; }
+        public string? ErrorMessage {get; init; }
 
         public static ValidationResult<T> Success(T value)
-            => new ValidationResult<T>(true, value, null);
-
+            => new ValidationResult<T> {IsValid = true, Value = value, ErrorMessage = null};
 
         public static ValidationResult<T> Failure(string errorMessage)
-            => new ValidationResult<T>(false, default, errorMessage);
+            => new ValidationResult<T> {IsValid = false, Value = default, ErrorMessage = errorMessage};
     }
 }
 
