@@ -1,9 +1,54 @@
 ﻿namespace NumberGuessingGame {
 
-    public class GameState {
+    public class GameSetting {
+        // 全てイミュータブルなので、getterでのディープコピーは必要ない。
         public int SecretNumber {get; set;}
+        public int MaxAttempts {get; set;}
+        public GameSetting(int secretNumber, int maxAttempts) {
+            SecretNumber = secretNumber;
+            MaxAttempts = maxAttempts;
+        }
+    }
+
+    public class GameState {
+        // 全てイミュータブルなので、getterでのディープコピーは必要ない。
+        public int? LastInputNumber {get; set;}
+        public int CurrentAttempt {get; set;}
+        public bool IsSuccess {get; set;}
         public GameState() {
-            SecretNumber = 43;
+            LastInputNumber = null;
+            CurrentAttempt = 0;
+            IsSuccess = false;
+        }           
+
+        public GameState UpdateState(int input, GameSetting gameSetting) {
+            LastInputNumber = input;
+            CurrentAttempt++;
+            IsSuccess = (gameSetting.SecretNumber == input) ? true : false;
+            return this;
+        }
+    }
+
+
+    //InputStateというのも作ろうと思ったがintで問題ないので、GameManagerの中でintで状態を定義
+
+    public class GameManager {
+        public GameManager() {
+            // successとかinputは状態なのでいい感じに扱う必要がある。
+            GameSetting gameSetting = new GameSetting(43, 7); 
+            GameState gameState = new GameState();
+            while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
+                string? input = null;
+                while (!InputValidater.IsValidInput(input)) {
+                    input = CliIo.CliInput();
+                }
+                Console.WriteLine("Your input is valid input");
+                int inputInteger = int.Parse(input);
+                gameState.UpdateState(inputInteger, gameSetting);
+                if (gameState.IsSuccess) {
+                    Console.WriteLine("Your input is correct.");
+                }
+            }
         }
     }
 
@@ -13,12 +58,6 @@
         public static bool IsValidInput(string? input) {
             return int.TryParse(input, out int result);
         }
-
-        public static bool IsCorrectInput(int input, GameState gameState) {
-            return input == gameState.SecretNumber ? true : false;
-        }
-
-            
     }
 
     public class CliIo {
@@ -34,21 +73,7 @@
 
     class Program {
         static void Main(string[] args) {
-            bool success = false;
-            // successとかinputは状態なのでいい感じに扱う必要がある。
-            GameState gameState = new GameState(); 
-            while (!success) {
-                string? input = null;
-                while (!InputValidater.IsValidInput(input)) {
-                    input = CliIo.CliInput();
-                }
-                Console.WriteLine("Your input is valid input");
-                int inputInteger = int.Parse(input);
-                if (InputValidater.IsCorrectInput(inputInteger, gameState)) {
-                    success = true;
-                    Console.WriteLine("Your input is correct.");
-                }
-            }
+            GameManager gameManager = new GameManager();
         }
     }
 }
