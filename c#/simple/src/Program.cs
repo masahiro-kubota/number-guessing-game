@@ -1,12 +1,15 @@
 ﻿namespace NumberGuessingGame {
+
     public class ValidateInput {
+    //TODO 検証関数を追加する。
         public static bool IsInteger(string? input) {
             return int.TryParse(input, out int result);
         }
 
-        public static bool checkIsValidInput(string? input) {
+        public static bool IsValidInput(string? input) {
             return IsInteger(input);
         }
+
             
     }
 
@@ -24,10 +27,9 @@
 
     class Program {
         static void Main(string[] args) {
-            bool isValidInput = false;
-            while (!isValidInput) {
-                string? input = CliIo.CliInput();
-                isValidInput = ValidateInput.checkIsValidInput(input);
+            string? input = null;
+            while (!ValidateInput.IsValidInput(input)) {
+                input = CliIo.CliInput();
             }
             Console.WriteLine("Your input is valid input");
         }
