@@ -1,13 +1,21 @@
 ﻿namespace NumberGuessingGame {
 
-    public class ValidateInput {
+    public class GameState {
+        public int SecretNumber {get; set;}
+        public GameState() {
+            SecretNumber = 43;
+        }
+    }
+
+    public class InputValidater {
     //TODO 検証関数を追加する。
-        public static bool IsInteger(string? input) {
+    //TODO 検証内容に基づいたInterfaceを設定したい
+        public static bool IsValidInput(string? input) {
             return int.TryParse(input, out int result);
         }
 
-        public static bool IsValidInput(string? input) {
-            return IsInteger(input);
+        public static bool IsCorrectInput(int input, GameState gameState) {
+            return input == gameState.SecretNumber ? true : false;
         }
 
             
@@ -24,14 +32,23 @@
         }
     }
 
-
     class Program {
         static void Main(string[] args) {
-            string? input = null;
-            while (!ValidateInput.IsValidInput(input)) {
-                input = CliIo.CliInput();
+            bool success = false;
+            // successとかinputは状態なのでいい感じに扱う必要がある。
+            GameState gameState = new GameState(); 
+            while (!success) {
+                string? input = null;
+                while (!InputValidater.IsValidInput(input)) {
+                    input = CliIo.CliInput();
+                }
+                Console.WriteLine("Your input is valid input");
+                int inputInteger = int.Parse(input);
+                if (InputValidater.IsCorrectInput(inputInteger, gameState)) {
+                    success = true;
+                    Console.WriteLine("Your input is correct.");
+                }
             }
-            Console.WriteLine("Your input is valid input");
         }
     }
 }
