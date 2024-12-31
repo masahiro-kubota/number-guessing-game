@@ -20,7 +20,7 @@
             CurrentAttempt = 0;
             IsSuccess = false;
         }           
-
+        // 再生成して不変性を維持する必要がある。
         public GameState UpdateState(int input, GameSetting gameSetting) {
             LastInputNumber = input;
             CurrentAttempt++;
@@ -34,31 +34,34 @@
 
     public class GameManager {
         public GameManager() {
-            // successとかinputは状態なのでいい感じに扱う必要がある。
             GameSetting gameSetting = new GameSetting(43, 7); 
             GameState gameState = new GameState();
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
-                string? input = null;
-                while (!InputValidater.IsValidInput(input)) {
-                    input = CliIo.CliInput();
-                }
-                Console.WriteLine("Your input is valid input");
-                int inputInteger = int.Parse(input);
-                gameState.UpdateState(inputInteger, gameSetting);
-                if (gameState.IsSuccess) {
-                    Console.WriteLine("Your input is correct.");
-                }
+                gameState = ProcessAttempt(gameSetting, gameState);
             }
         }
-    }
-
-    public class InputValidater {
-    //TODO 検証関数を追加する。
-    //TODO 検証内容に基づいたInterfaceを設定したい
+        //TODO 検証関数を追加する。
+        //TODO 検証内容に基づいたInterfaceを設定したい
         public static bool IsValidInput(string? input) {
             return int.TryParse(input, out int result);
         }
+
+        public static GameState ProcessAttempt(GameSetting gameSetting, GameState gameState) {
+            // successとかinputは状態なのでいい感じに扱う必要がある。
+            string? input = null;
+            while (!IsValidInput(input)) {
+                input = CliIo.CliInput();
+            }
+            Console.WriteLine("Your input is valid input");
+            gameState = gameState.UpdateState(int.Parse(input), gameSetting);
+            if (gameState.IsSuccess) {
+                Console.WriteLine("Your input is correct.");
+            }
+            return gameState;
+
+        }
     }
+
 
     public class CliIo {
         public static string? CliInput() { 
