@@ -1,4 +1,6 @@
-﻿namespace NumberGuessingGame {
+﻿using System;
+
+namespace NumberGuessingGame {
 
     public class GameSetting {
         // 全てイミュータブルなので、getterでのディープコピーは必要ない。
@@ -24,11 +26,11 @@
 
     //InputStateというのも作ろうと思ったがintで問題ないので、GameManagerの中でintで状態を定義
     public class GameManager {
-        public GameManager(Func<string?> inputProvider) {
+        public GameManager(IInput input) {
             GameSetting gameSetting = new GameSetting{SecretNumber = 43, MaxAttempts = 7}; 
             GameState gameState = new GameState();
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
-                gameState = ProcessAttempt(inputProvider, gameSetting, gameState);
+                gameState = ProcessAttempt(input, gameSetting, gameState);
             }
         }
         //TODO 検証関数を追加する。
@@ -37,12 +39,12 @@
             return int.TryParse(input, out result);
         }
 
-        public static GameState ProcessAttempt(Func<string?> inputProvider, GameSetting gameSetting, GameState gameState) {
+        public static GameState ProcessAttempt(IInput inputData, GameSetting gameSetting, GameState gameState) {
             // successとかinputは状態なのでいい感じに扱う必要がある。stringは参照型だがイミュータブルなので不変。
             string? input = null;
             int parsedInput;
             while (!IsValidInput(input, out parsedInput)) {
-                input = inputProvider();
+                input = inputData.InputString();
             }
             Console.WriteLine("Your input is valid input");
             gameState = GameState.UpdateState(parsedInput, gameState, gameSetting);
@@ -53,20 +55,32 @@
         }
     }
 
-    public class CliIo {
-        public static string? CliInput() { 
+   public interface IInputData {
+       string GetUser();
+       string? InputString();
+       DateTime InputTime();
+   }
+
+
+    public class CliIo : IInput {
+        public string GetUser() {
+            return "User";
+        }
+
+        public string? InputString() { 
             Console.WriteLine("Please enter input: ");
             return Console.ReadLine();
         }
 
-        public static void CliOutput() {
-           Console.WriteLine("CLI Output."); 
+        public DateTime InputTime() {
+            return DateTime.now;
         }
     }
 
     class Program {
         static void Main(string[] args) {
-            GameManager gameManager = new GameManager(CliIo.CliInput);
+            // 依存性注入 string?で型制約入れてる。
+            GameManager gameManager = new GameManager(new CliIo());
         }
     }
 }
