@@ -30,13 +30,15 @@ namespace NumberGuessingGame {
         public GameManager(IUserInterfaceFactory uiFactory) {
             GameSetting gameSetting = new GameSetting{SecretNumber = 43, MaxAttempts = 7}; 
             GameState gameState = new GameState();
-            IUserInterface ui = uiFactory.CreateUserInterface(UserInterfaceType.File);
+            IUserInterface ui = uiFactory.CreateUserInterface(UserInterfaceType.CLI);
             gameState = ProcessAttempt(ui, gameSetting, gameState);
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
                 ui.StandardOutput("Not Correct");
                 gameState = ProcessAttempt(ui, gameSetting, gameState);
             }
-            ui.StandardOutput("Correct");
+            if (gameState.IsSuccess) {
+                ui.StandardOutput("Correct");
+            }
         }
 
         public static GameState ProcessAttempt(IUserInterface inputData, GameSetting gameSetting, GameState previousGameState) {
@@ -74,27 +76,37 @@ namespace NumberGuessingGame {
             }
         }
     }
-    public class CliIo: IUserInterface {
-        public string GetUser() {
+    // composition
+    public class UserInterfaceHelper {
+        public static string GetUser() {
             return "User";
+        }
+        public static DateTime InputTime() {
+            return DateTime.Now;
         }
         //TODO 検証関数を追加する。
         //TODO 検証内容に基づいたInterfaceを設定したい
         public static bool IsValidInput(string? input, out int result) {
             return int.TryParse(input, out result);
         }
+    }
+
+    public class CliIo: IUserInterface {
+        public string GetUser() {
+            return UserInterfaceHelper.GetUser();
+        }
         public int InputInteger() {
             Console.WriteLine("Please enter input: ");
             string? input = Console.ReadLine();
             int parsedInput;
-            while (!IsValidInput(input, out parsedInput)) {
+            while (!UserInterfaceHelper.IsValidInput(input, out parsedInput)) {
                 Console.WriteLine("Invalid Input");
                 input = Console.ReadLine();
             }
             return parsedInput;
         }
         public DateTime InputTime() {
-            return DateTime.Now;
+            return UserInterfaceHelper.InputTime();
         }
 
         public void StandardOutput(string output) { 
@@ -105,15 +117,12 @@ namespace NumberGuessingGame {
     public class FileIo: IUserInterface {
         public string FilePath{get; init;} = "input.txt";
         public string GetUser() {
-            return "User";
-        }
-        public static bool IsValidInput(string? input, out int result) {
-            return int.TryParse(input, out result);
+            return UserInterfaceHelper.GetUser();
         }
         public int InputInteger() {
             string? input = File.ReadLines(FilePath).FirstOrDefault();
             int parsedInput;
-            while (!IsValidInput(input, out parsedInput)) {
+            while (!UserInterfaceHelper.IsValidInput(input, out parsedInput)) {
                 Console.WriteLine("Invalid Input");
                 Thread.Sleep(1000);
                 input = File.ReadLines(FilePath).FirstOrDefault();
@@ -121,8 +130,9 @@ namespace NumberGuessingGame {
             return parsedInput;
         }
         public DateTime InputTime() {
-            return DateTime.Now;
+            return UserInterfaceHelper.InputTime();
         }
+
         public void StandardOutput(string output) { 
             File.WriteAllText(FilePath, output);
         }
