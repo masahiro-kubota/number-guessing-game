@@ -27,39 +27,59 @@ namespace NumberGuessingGame {
     // Business
     //InputStateというのも作ろうと思ったがintで問題ないので、GameManagerの中でintで状態を定義
     public class GameManager {
-        public GameManager(IUserInterface ui) {
+        public GameManager(IUserInterfaceFactory uiFactory) {
             GameSetting gameSetting = new GameSetting{SecretNumber = 43, MaxAttempts = 7}; 
             GameState gameState = new GameState();
+            IUserInterface ui = uiFactory.CreateUserInterface(UserInterfaceType.File);
             gameState = ProcessAttempt(ui, gameSetting, gameState);
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
                 ui.StandardOutput("Not Correct");
                 gameState = ProcessAttempt(ui, gameSetting, gameState);
             }
+            ui.StandardOutput("Correct");
         }
 
-        public static GameState ProcessAttempt(IUserInterface inputData, GameSetting gameSetting, GameState gameState) {
+        public static GameState ProcessAttempt(IUserInterface inputData, GameSetting gameSetting, GameState previousGameState) {
             // successとかinputは状態なのでいい感じに扱う必要がある。stringは参照型だがイミュータブルなので不変。
             int parsedInput = inputData.InputInteger();
-            gameState = GameState.UpdateState(parsedInput, gameState, gameSetting);
-            return gameState;
+            GameState newGameState = GameState.UpdateState(parsedInput, previousGameState, gameSetting);
+            return newGameState;
         }
     }
 
-   public interface IUserInterface {
+    public interface IUserInterface {
        string GetUser();
        int InputInteger();
        DateTime InputTime();
        void StandardOutput(string output);
-   }
+    }
+
+    public interface IUserInterfaceFactory {
+       IUserInterface CreateUserInterface(UserInterfaceType config);
+    }
+
+    public enum UserInterfaceType
+    {
+        File,
+        CLI
+    }
 
     // Presentation
-    public class CliIo : IUserInterface {
+    public class UserInterfaceFactory: IUserInterfaceFactory {
+        public IUserInterface CreateUserInterface(UserInterfaceType config) {
+            if (config == UserInterfaceType.CLI) {
+                return new CliIo();
+            } else {
+                return new FileIo();
+            }
+        }
+    }
+    public class CliIo: IUserInterface {
         public string GetUser() {
             return "User";
         }
         //TODO 検証関数を追加する。
         //TODO 検証内容に基づいたInterfaceを設定したい
-
         public static bool IsValidInput(string? input, out int result) {
             return int.TryParse(input, out result);
         }
@@ -68,7 +88,7 @@ namespace NumberGuessingGame {
             string? input = Console.ReadLine();
             int parsedInput;
             while (!IsValidInput(input, out parsedInput)) {
-                Console.WriteLine("Invalide Input");
+                Console.WriteLine("Invalid Input");
                 input = Console.ReadLine();
             }
             return parsedInput;
@@ -94,8 +114,9 @@ namespace NumberGuessingGame {
             string? input = File.ReadLines(FilePath).FirstOrDefault();
             int parsedInput;
             while (!IsValidInput(input, out parsedInput)) {
-                Console.WriteLine("Invalide Input");
+                Console.WriteLine("Invalid Input");
                 Thread.Sleep(1000);
+                input = File.ReadLines(FilePath).FirstOrDefault();
             }
             return parsedInput;
         }
@@ -103,7 +124,6 @@ namespace NumberGuessingGame {
             return DateTime.Now;
         }
         public void StandardOutput(string output) { 
-            Console.WriteLine(output);
             File.WriteAllText(FilePath, output);
         }
     }
@@ -111,8 +131,8 @@ namespace NumberGuessingGame {
 
     class Program {
         static void Main(string[] args) {
-            // 依存性注入 string?で型制約入れてる。
-            GameManager gameManager = new GameManager(new FileIo());
+            // 依存性注入
+            GameManager gameManager = new GameManager(new UserInterfaceFactory());
         }
     }
 }
