@@ -26,7 +26,7 @@ namespace NumberGuessingGame {
 
     //InputStateというのも作ろうと思ったがintで問題ないので、GameManagerの中でintで状態を定義
     public class GameManager {
-        public GameManager(IInput input) {
+        public GameManager(IInputData input) {
             GameSetting gameSetting = new GameSetting{SecretNumber = 43, MaxAttempts = 7}; 
             GameState gameState = new GameState();
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
@@ -39,7 +39,7 @@ namespace NumberGuessingGame {
             return int.TryParse(input, out result);
         }
 
-        public static GameState ProcessAttempt(IInput inputData, GameSetting gameSetting, GameState gameState) {
+        public static GameState ProcessAttempt(IInputData inputData, GameSetting gameSetting, GameState gameState) {
             // successとかinputは状態なのでいい感じに扱う必要がある。stringは参照型だがイミュータブルなので不変。
             string? input = null;
             int parsedInput;
@@ -62,7 +62,7 @@ namespace NumberGuessingGame {
    }
 
 
-    public class CliIo : IInput {
+    public class CliIo : IInputData {
         public string GetUser() {
             return "User";
         }
@@ -73,7 +73,7 @@ namespace NumberGuessingGame {
         }
 
         public DateTime InputTime() {
-            return DateTime.now;
+            return DateTime.Now;
         }
     }
 
