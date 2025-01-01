@@ -24,11 +24,11 @@
 
     //InputStateというのも作ろうと思ったがintで問題ないので、GameManagerの中でintで状態を定義
     public class GameManager {
-        public GameManager() {
+        public GameManager(Func<string?> inputProvider) {
             GameSetting gameSetting = new GameSetting{SecretNumber = 43, MaxAttempts = 7}; 
             GameState gameState = new GameState();
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
-                gameState = ProcessAttempt(gameSetting, gameState);
+                gameState = ProcessAttempt(inputProvider, gameSetting, gameState);
             }
         }
         //TODO 検証関数を追加する。
@@ -37,12 +37,12 @@
             return int.TryParse(input, out result);
         }
 
-        public static GameState ProcessAttempt(GameSetting gameSetting, GameState gameState) {
+        public static GameState ProcessAttempt(Func<string?> inputProvider, GameSetting gameSetting, GameState gameState) {
             // successとかinputは状態なのでいい感じに扱う必要がある。stringは参照型だがイミュータブルなので不変。
             string? input = null;
             int parsedInput;
             while (!IsValidInput(input, out parsedInput)) {
-                input = CliIo.CliInput();
+                input = inputProvider();
             }
             Console.WriteLine("Your input is valid input");
             gameState = GameState.UpdateState(parsedInput, gameState, gameSetting);
@@ -66,7 +66,7 @@
 
     class Program {
         static void Main(string[] args) {
-            GameManager gameManager = new GameManager();
+            GameManager gameManager = new GameManager(CliIo.CliInput);
         }
     }
 }
