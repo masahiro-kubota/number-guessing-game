@@ -9,10 +9,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     && apt-get clean
 
-# 環境変数を設定
-ENV CC=/usr/bin/gcc
-ENV CXX=/usr/bin/g++
-
 # zsh をデフォルトシェルに設定
 RUN chsh -s /usr/bin/zsh
 
@@ -30,6 +26,10 @@ WORKDIR /workspace
 
 # Zsh プロンプトをカスタマイズ
 RUN echo 'export PROMPT="%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ "' >> /root/.zshrc
+
+# 環境変数を設定 .zshrcに色々書いてるのでENVではなく.zshrcに書き込み
+RUN echo 'export CC=/usr/bin/gcc' >> /root/.zshrc
+RUN echo 'export CXX=/usr/bin/g++' >> /root/.zshrc
 
 # zsh をデフォルトで起動
 CMD ["zsh"]
