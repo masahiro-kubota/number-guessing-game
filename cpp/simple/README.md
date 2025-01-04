@@ -1,4 +1,5 @@
 Underconstruction
+スマートポインタに変更する
 
 ```
 # use make

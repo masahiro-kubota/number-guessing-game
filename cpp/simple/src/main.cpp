@@ -1,40 +1,50 @@
 #include <iostream>
 #include "main.hpp"
 
-GameState GameState::UpdateState(int input) {
+GameState GameState::update_state(int input, GameState game_state, GameSetting game_setting) {
+  return GameState(
+    input,
+    game_state.current_attempt_ + 1,
+    game_setting.SECRET_NUM == input ? true : false
+    );
+}
 
-
-void GameManager::GameManager() {
+GameManager::GameManager(DictIo dict_io) {
   GameSetting game_setting = GameSetting(43, 7);
-  GameState game_state = GameState();
-  std::string input;
-  while (game_state.current_attempt < game_setting.MAX_ATTEMPTS && !game_state.is_success) {
-    std::cout << "Input the number" << std::endl;
-    std::cin >> input;
+  GameState game_state;
+  while (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
     try {
+      std::string input = dict_io.get_input();
       int num = std::stoi(input);
-      game_state.current_attempt++;
-      if (game_setting.SECRET_NUM == num) {
+      game_state = game_state.update_state(num, game_state, game_setting);
+      if (game_state.is_success_) {
         std::cout << "Correct" << std::endl;
-        is_success = true;
       } else {
         std::cout << "Incorrect" << std::endl;
       }
-    } catch (std::invalid_argument) {
+    } catch (const std::invalid_argument&) {
       // 例外オブジェクトを使わない場合は、const参照を使わなくてもいい。
       std::cout << "Invalid Input" << std::endl;
     } catch (const std::out_of_range& e) {
       std::cout << "Out of range" << std::endl;
     }
   }
-  if (current_attempt == MAX_ATTEMPTS) {
+  if (game_state.current_attempt_ == game_setting.MAX_ATTEMPTS) {
     std::cout << "max attempts" << std::endl;
   }
+}
+
+std::string DictIo::get_input() {
+  std::string input;
+  std::cout << "Input the number" << std::endl;
+  std::cin >> input;
+  return input;
 }
 
 
 
 int main(){
-  Main main_instance(43, 7);
-  main_instance.start();
+  DictIo dict_io;
+  GameManager game_manager(dict_io);
 }
+
