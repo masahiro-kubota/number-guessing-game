@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     zsh \
     git \
     curl \
+    tmux \
     && apt-get clean
 
 # zsh をデフォルトシェルに設定
