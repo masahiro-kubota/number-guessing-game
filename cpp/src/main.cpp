@@ -1,16 +1,20 @@
 #include <iostream>
 #include "main.hpp"
 
-void Main::start() {
-  current_attempt = 0;
-  is_success = false;
-  while (current_attempt < MAX_ATTEMPTS && !is_success) {
+GameState GameState::UpdateState(int input) {
+
+
+void GameManager::GameManager() {
+  GameSetting game_setting = GameSetting(43, 7);
+  GameState game_state = GameState();
+  std::string input;
+  while (game_state.current_attempt < game_setting.MAX_ATTEMPTS && !game_state.is_success) {
     std::cout << "Input the number" << std::endl;
     std::cin >> input;
     try {
       int num = std::stoi(input);
-      current_attempt++;
-      if (SECRET_NUM == num) {
+      game_state.current_attempt++;
+      if (game_setting.SECRET_NUM == num) {
         std::cout << "Correct" << std::endl;
         is_success = true;
       } else {
@@ -27,6 +31,8 @@ void Main::start() {
     std::cout << "max attempts" << std::endl;
   }
 }
+
+
 
 int main(){
   Main main_instance(43, 7);
