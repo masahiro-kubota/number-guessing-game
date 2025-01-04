@@ -9,6 +9,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     && apt-get clean
 
+# 環境変数を設定
+ENV CC=/usr/bin/gcc
+ENV CXX=/usr/bin/g++
+
 # zsh をデフォルトシェルに設定
 RUN chsh -s /usr/bin/zsh
 
