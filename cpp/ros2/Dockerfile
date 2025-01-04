@@ -25,7 +25,7 @@ RUN cd dotfiles && chmod +x install.sh && ./install.sh
 WORKDIR /workspace
 
 # Zsh プロンプトをカスタマイズ
-RUN echo 'export PROMPT="%F{yellow}[ros2-custom]%f %F{green}%n@%m%f:%F{blue}%~%f$ "' >> /root/.zshrc
+RUN echo 'export PROMPT="%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ "' >> /root/.zshrc
 
 # zsh をデフォルトで起動
 CMD ["zsh"]
