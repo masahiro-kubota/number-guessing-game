@@ -11,6 +11,13 @@ build:
 run:
 	docker run --rm -v $(WORKSPACE):/workspace -it --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
+# 既存のコンテナに接続するターゲット
+exec:
+	docker exec -it $(CONTAINER_NAME) zsh
+
+fix-permissions:
+	sudo chown -R $(shell id -u):$(shell id -g) $(WORKSPACE)
+
 # クリーンアップターゲット (不要なイメージを削除)
 clean:
 	docker rmi -f $(IMAGE_NAME)

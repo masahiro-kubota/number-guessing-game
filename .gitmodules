@@ -1,4 +1,0 @@
-[submodule "cpp/ros2/src/examples"]
-	path = cpp/ros2/src/examples
-	url = https://github.com/ros2/examples
-	branch = humble
