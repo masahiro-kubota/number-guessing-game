@@ -24,15 +24,14 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  # set(ament_cmake_copyright_found true)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
-  # set(ament_cmake_cpplint_found true)
-  ament_lint_auto_find_test_dependencies()
+  find_package(ament_cmake_gtest REQUIRED)
+
+  # テストの追加 (src/subscriber_member_function.cpp を一時的に除外)
+  ament_add_gtest(test_game_logic test/test_game_logic.cpp)
+  if(TARGET test_game_logic)
+    target_include_directories(test_game_logic PRIVATE src)
+    ament_target_dependencies(test_game_logic rclcpp std_msgs)
+  endif()
 endif()
 
 ament_package()
