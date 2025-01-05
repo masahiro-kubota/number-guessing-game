@@ -27,10 +27,13 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
 
   # テストの追加 (src/subscriber_member_function.cpp を一時的に除外)
-  ament_add_gtest(test_game_logic test/test_game_logic.cpp)
+  ament_add_gtest(test_game_logic test/test_game_logic.cpp src/subscriber_member_function.cpp)
   if(TARGET test_game_logic)
     target_include_directories(test_game_logic PRIVATE src)
     ament_target_dependencies(test_game_logic rclcpp std_msgs)
+
+    # GTEST_MAIN を有効にする
+    target_compile_definitions(test_game_logic PRIVATE GTEST_MAIN)
   endif()
 endif()
 
