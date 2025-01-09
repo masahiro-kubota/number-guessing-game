@@ -23,14 +23,19 @@ public:
   GameState update_state(int input, GameState game_state, GameSetting game_setting);
 };
 
-class DictIo {
+class IPresentation {
 public:
-  std::string get_input();
+  virtual std::string get_input() const = 0;
+  virtual ~IPresentation() {}
+};
+
+class DictIo : public IPresentation{
+  std::string get_input() const override;
 };
 
 class GameManager {
 public:
-  GameManager(DictIo dict_io);
+  GameManager(const IPresentation& i_presentation);
 };
 
 #endif
