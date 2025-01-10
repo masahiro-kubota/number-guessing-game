@@ -41,7 +41,9 @@ std::string DictIo::get_input() const {
   return input;
 }
 
-
+std::unique_ptr<IPresentation> CreateUserInterface() {
+  return std::make_unique<DictIo>();
+}
 
 int main(){
   DictIo dict_io;

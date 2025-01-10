@@ -2,6 +2,7 @@
 #define MAIN_HPP
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 class GameSetting {
@@ -31,6 +32,11 @@ public:
 
 class DictIo : public IPresentation{
   std::string get_input() const override;
+};
+
+class UserInterfaceFactory {
+public:
+  static std::unique_ptr<IPresentation> CreateUserInterface();
 };
 
 class GameManager {
