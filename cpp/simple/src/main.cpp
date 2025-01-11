@@ -41,7 +41,7 @@ std::string CliIo::get_input() const {
   return input;
 }
 
-std::unique_ptr<IPresentation> CreateUserInterface() {
+std::unique_ptr<IPresentation> UserInterfaceFactory::CreateUserInterface() {
   return std::make_unique<CliIo>();
 }
 
@@ -50,7 +50,6 @@ int main(){
   std::unique_ptr<CliIo> Cli_io_ptr = std::make_unique<CliIo>();
   GameManager game_manager(*cli_io_ptr);
   */
-  CliIo cli_io;
-  GameManager game_manager(cli_io);
+  GameManager game_manager(*UserInterfaceFactory::CreateUserInterface());
 }
 
