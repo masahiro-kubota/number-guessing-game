@@ -46,7 +46,11 @@ std::unique_ptr<IPresentation> CreateUserInterface() {
 }
 
 int main(){
-  std::unique_ptr<CliIo> cli_io_ptr = std::make_unique<CliIo>();
+  /*
+  std::unique_ptr<CliIo> Cli_io_ptr = std::make_unique<CliIo>();
   GameManager game_manager(*cli_io_ptr);
+  */
+  CliIo cli_io;
+  GameManager game_manager(cli_io);
 }
 
