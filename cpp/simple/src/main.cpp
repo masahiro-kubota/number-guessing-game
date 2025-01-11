@@ -34,7 +34,7 @@ GameManager::GameManager(const IPresentation& presentation) {
   }
 }
 
-std::string DictIo::get_input() const {
+std::string CliIo::get_input() const {
   std::string input;
   std::cout << "Input the number" << std::endl;
   std::cin >> input;
@@ -42,11 +42,11 @@ std::string DictIo::get_input() const {
 }
 
 std::unique_ptr<IPresentation> CreateUserInterface() {
-  return std::make_unique<DictIo>();
+  return std::make_unique<CliIo>();
 }
 
 int main(){
-  DictIo dict_io;
-  GameManager game_manager(dict_io);
+  std::unique_ptr<CliIo> cli_io_ptr = std::make_unique<CliIo>();
+  GameManager game_manager(*cli_io_ptr);
 }
 

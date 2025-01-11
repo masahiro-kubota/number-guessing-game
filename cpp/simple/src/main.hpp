@@ -30,7 +30,7 @@ public:
   virtual ~IPresentation() {}
 };
 
-class DictIo : public IPresentation{
+class CliIo : public IPresentation{
   std::string get_input() const override;
 };
 
