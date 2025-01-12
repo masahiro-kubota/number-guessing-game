@@ -11,7 +11,7 @@ namespace NumberGuessingGame {
             GameSetting gameSetting = new GameSetting{SecretNumber = 43, MaxAttempts = 7}; 
             GameState gameState = new GameState();
             IUserInterfaceFactory uiFactory = new UserInterfaceFactory();
-            // uiFactoryはPresentation層の各UIに依存している。
+            // uiFactoryはPresentation層の各UIとIUserInterfaceFactoryに依存している。
             GameManager gameManager = new GameManager(gameSetting, gameState, uiFactory);
         }
     }
