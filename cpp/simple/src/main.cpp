@@ -1,7 +1,7 @@
 #include <iostream>
 #include "main.hpp"
 
-GameState GameState::update_state(int input, GameState game_state, GameSetting game_setting) {
+GameState GameState::update_state(int input, const GameState& game_state, const GameSetting& game_setting) const {
   return GameState(
     input,
     game_state.current_attempt_ + 1,
@@ -9,13 +9,14 @@ GameState GameState::update_state(int input, GameState game_state, GameSetting g
     );
 }
 
-GameManager::GameManager(const IPresentation& presentation) {
-  GameSetting game_setting = GameSetting(43, 7);
-  GameState game_state;
+GameManager::GameManager(const GameSetting& game_setting, const GameState& initial_game_state, const IPresentation& presentation) {
+  GameState game_state = initial_game_state;
   while (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
+    std::cout << game_state.current_attempt_ << std::endl;
     try {
       std::string input = presentation.get_input();
       int num = std::stoi(input);
+      // game_stateを使いまわしてる 
       game_state = game_state.update_state(num, game_state, game_setting);
       if (game_state.is_success_) {
         std::cout << "Correct" << std::endl;
@@ -23,7 +24,6 @@ GameManager::GameManager(const IPresentation& presentation) {
         std::cout << "Incorrect" << std::endl;
       }
     } catch (const std::invalid_argument&) {
-      // 例外オブジェクトを使わない場合は、const参照を使わなくてもいい。
       std::cout << "Invalid Input" << std::endl;
     } catch (const std::out_of_range& e) {
       std::cout << "Out of range" << std::endl;
@@ -41,15 +41,15 @@ std::string CliIo::get_input() const {
   return input;
 }
 
-std::unique_ptr<IPresentation> UserInterfaceFactory::CreateUserInterface() {
+std::unique_ptr<IPresentation> PresentationFactory::CreatePresentationPtr() {
   return std::make_unique<CliIo>();
 }
 
 int main(){
-  /*
-  std::unique_ptr<CliIo> Cli_io_ptr = std::make_unique<CliIo>();
-  GameManager game_manager(*cli_io_ptr);
-  */
-  GameManager game_manager(*UserInterfaceFactory::CreateUserInterface());
+  // ポリモーフィズムを使うためには、値ではなくポインタを生成するしかない。
+  std::unique_ptr<IPresentation> user_presentation_ptr = PresentationFactory::CreatePresentationPtr();
+  GameSetting game_setting = GameSetting(43, 7);
+  GameState initial_game_state;
+  GameManager game_manager(game_setting, initial_game_state, *user_presentation_ptr);
 }
 

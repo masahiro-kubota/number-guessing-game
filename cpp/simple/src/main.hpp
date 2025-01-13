@@ -21,7 +21,7 @@ public:
   bool is_success_;
   GameState(int last_input_number = 0, int current_attempt = 0, bool is_success = false)
     : last_input_number_(last_input_number), current_attempt_(current_attempt), is_success_(is_success) {};
-  GameState update_state(int input, GameState game_state, GameSetting game_setting);
+  GameState update_state(int input, const GameState& game_state, const GameSetting& game_setting) const;
 };
 
 class IPresentation {
@@ -34,14 +34,14 @@ class CliIo : public IPresentation{
   std::string get_input() const override;
 };
 
-class UserInterfaceFactory {
+class PresentationFactory {
 public:
-  static std::unique_ptr<IPresentation> CreateUserInterface();
+  static std::unique_ptr<IPresentation> CreatePresentationPtr();
 };
 
 class GameManager {
 public:
-  GameManager(const IPresentation& i_presentation);
+  GameManager(const GameSetting& game_setting, const GameState& initial_game_state, const IPresentation& i_presentation);
 };
 
 #endif
