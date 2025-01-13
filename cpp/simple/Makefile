@@ -2,7 +2,7 @@
 TARGET = main
 
 # ソースファイルのリスト（複数ファイルの場合はスペースで区切る）
-SRCS = src/main.cpp
+SRCS = src/main.cpp src/helper.cpp
 
 # 使用するC++コンパイラ（必要に応じて変更可能）
 CXX = g++

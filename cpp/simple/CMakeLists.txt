@@ -19,7 +19,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 # ソースファイルとヘッダーファイルをリストとして設定
-set(SRCS src/main.cpp)
+set(SRCS
+    src/main.cpp
+    src/helper.cpp)
 
 # 実行可能ファイルを生成
 # 'main'という名前の実行ファイルを指定されたソースファイルから作成
