@@ -36,12 +36,13 @@ GameManager::GameManager(const GameSetting& game_setting, const GameState& initi
 
 std::string CliIo::get_input() const {
   std::string input;
+  // whileでcinで入力をGameManagerの状態遷移の関数を実行する
   std::cout << "Input the number" << std::endl;
   std::cin >> input;
   return input;
 }
 
-std::unique_ptr<IPresentation> PresentationFactory::CreatePresentationPtr() {
+std::unique_ptr<IPresentation> PresentationFactory::CreatePresentationPtr(const GameManager& game_manager) {
   return std::make_unique<CliIo>();
 }
 

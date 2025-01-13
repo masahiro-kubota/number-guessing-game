@@ -36,7 +36,7 @@ class CliIo : public IPresentation{
 
 class PresentationFactory {
 public:
-  static std::unique_ptr<IPresentation> CreatePresentationPtr();
+  static std::unique_ptr<IPresentation> CreatePresentationPtr(const GameManager& game_manager);
 };
 
 class GameManager {
