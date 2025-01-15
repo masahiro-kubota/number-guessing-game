@@ -1,6 +1,8 @@
 Underconstruction
 スマートポインタに変更する
 
+C#だったらコールバックは、デリゲートを使ってAction や Funcで注入する
+
 ```
 # use make
 make
