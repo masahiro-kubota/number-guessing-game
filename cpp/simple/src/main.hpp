@@ -34,14 +34,15 @@ class CliIo : public IPresentation{
   std::string get_input() const override;
 };
 
+class GameManager {
+public:
+  GameManager(const GameSetting& game_setting, const GameState& initial_game_state, const IPresentation& i_presentation);
+};
+
 class PresentationFactory {
 public:
   static std::unique_ptr<IPresentation> CreatePresentationPtr(const GameManager& game_manager);
 };
 
-class GameManager {
-public:
-  GameManager(const GameSetting& game_setting, const GameState& initial_game_state, const IPresentation& i_presentation);
-};
 
 #endif
