@@ -2,6 +2,7 @@ using Core;
 namespace Service {
     public class GameManager {
         public GameManager(GameSetting gameSetting, GameState gameState, IUserInterfaceFactory uiFactory) {
+            // コンストラクタは初期化だけしていてほしい
             IUserInterface ui = uiFactory.CreateUserInterface(UserInterfaceType.CLI);
             gameState = ProcessAttempt(ui, gameSetting, gameState);
             while (!gameState.IsSuccess && gameState.CurrentAttempt < gameSetting.MaxAttempts) {
