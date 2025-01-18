@@ -50,7 +50,7 @@ class GameManager {
   public:
     GameManager();
     void start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const;
-    void process_data(std::string data) ;
+    void process_data(std::string data); // IoHandlerから呼び出されるcallback
 };
 
 #endif

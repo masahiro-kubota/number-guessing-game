@@ -51,6 +51,8 @@ void CliIo::set_callback(std::function<void(std::string)> cb) {
 }    
 
 void CliIo::start_io_handler() const {
-  get_input(); // CUI出力までやってくれる これをwhileで動かせばいい。
+  while (true) {
+    get_input(); // CUI出力までやってくれる これをwhileで動かせばいい。
+  }
 }
 
