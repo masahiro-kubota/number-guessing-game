@@ -27,7 +27,7 @@ public:
 
 class IIoHandler {
 public:
-  virtual void get_input() const = 0;
+  virtual void output_data(std::string data) const = 0;
   virtual void set_callback(std::function<void(std::string)> callback) = 0; // Ioから入力があったら全てこのcallbackが呼ばれる。callbackはGameManageのインスタンスメソッド。callbackはユーザの入力内容等を含んだstructを引数としたvoidを変えす関数（中ではそのデータを処理する）。
   virtual void start_io_handler() const = 0;
   virtual ~IIoHandler() = default;
@@ -38,19 +38,21 @@ class CliIo : public IIoHandler{
   private:
     std::function<void(std::string)> callback;
   public:
-    void get_input() const override;
+    void get_input() const;
+    void output_data(std::string data) const override;
     void set_callback(std::function<void(std::string)> cb) override;
     void start_io_handler() const override;
 };
 
 class GameManager {
   private:
-    GameSetting game_setting; // ゲーム設定（ほぼ不変）
+    GameSetting game_setting; // ゲーム設定（ほぼ不変）constにしてもいい。
     GameState game_state; // ゲームのstateを初期化
   public:
     GameManager();
     void start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const;
-    void process_data(std::string data); // IoHandlerから呼び出されるcallback
+    void process_data(std::string data, const std::shared_ptr<IIoHandler>& io_handler_ptr); // IoHandlerから呼び出されるcallback
+    void restart_game();
 };
 
 #endif
