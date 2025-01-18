@@ -9,13 +9,14 @@ GameState GameState::update_state(int input, const GameState& game_state, const 
     );
 }
 
-GameManager::GameManager(const GameSetting& game_setting, const GameState& initial_game_state, const IPresentation& presentation) {
-  GameState game_state = initial_game_state;
-  while (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
-    std::cout << game_state.current_attempt_ << std::endl;
+GameManager::GameManager()
+  : game_setting(43, 7),
+    game_state(){}
+
+void GameManager::process_data(const std::string data) {
+  if (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
     try {
-      std::string input = presentation.get_input();
-      int num = std::stoi(input);
+      int num = std::stoi(data);
       // game_stateを使いまわしてる 
       game_state = game_state.update_state(num, game_state, game_setting);
       if (game_state.is_success_) {
@@ -28,22 +29,28 @@ GameManager::GameManager(const GameSetting& game_setting, const GameState& initi
     } catch (const std::out_of_range& e) {
       std::cout << "Out of range" << std::endl;
     }
-  }
-  if (game_state.current_attempt_ == game_setting.MAX_ATTEMPTS) {
+  } else {
     std::cout << "max attempts" << std::endl;
   }
 }
 
-std::string CliIo::get_input() const {
+void GameManager::start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const {
+  io_handler_ptr->start_io_handler();
+}
+
+void CliIo::get_input() const {
   std::string input;
   // whileでcinで入力をGameManagerの状態遷移の関数を実行する
   std::cout << "Input the number" << std::endl;
   std::cin >> input;
-  return input;
+  callback(input); // CUI出力までをやってくれる。
 }
 
-std::unique_ptr<IPresentation> PresentationFactory::CreatePresentationPtr(const GameManager& game_manager) {
-  return std::make_unique<CliIo>();
-}
+void CliIo::set_callback(std::function<void(std::string)> cb) {
+  callback = cb;
+}    
 
+void CliIo::start_io_handler() const {
+  get_input(); // CUI出力までやってくれる これをwhileで動かせばいい。
+}
 

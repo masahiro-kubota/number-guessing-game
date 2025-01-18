@@ -1,6 +1,7 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -24,25 +25,32 @@ public:
   GameState update_state(int input, const GameState& game_state, const GameSetting& game_setting) const;
 };
 
-class IPresentation {
+class IIoHandler {
 public:
-  virtual std::string get_input() const = 0;
-  virtual ~IPresentation() {}
+  virtual void get_input() const = 0;
+  virtual void set_callback(std::function<void(std::string)> callback) = 0; // Ioから入力があったら全てこのcallbackが呼ばれる。callbackはGameManageのインスタンスメソッド。callbackはユーザの入力内容等を含んだstructを引数としたvoidを変えす関数（中ではそのデータを処理する）。
+  virtual void start_io_handler() const = 0;
+  virtual ~IIoHandler() = default;
 };
 
-class CliIo : public IPresentation{
-  std::string get_input() const override;
+
+class CliIo : public IIoHandler{
+  private:
+    std::function<void(std::string)> callback;
+  public:
+    void get_input() const override;
+    void set_callback(std::function<void(std::string)> cb) override;
+    void start_io_handler() const override;
 };
 
 class GameManager {
-public:
-  GameManager(const GameSetting& game_setting, const GameState& initial_game_state, const IPresentation& i_presentation);
+  private:
+    GameSetting game_setting; // ゲーム設定（ほぼ不変）
+    GameState game_state; // ゲームのstateを初期化
+  public:
+    GameManager();
+    void start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const;
+    void process_data(std::string data) ;
 };
-
-class PresentationFactory {
-public:
-  static std::unique_ptr<IPresentation> CreatePresentationPtr(const GameManager& game_manager);
-};
-
 
 #endif
