@@ -2,7 +2,8 @@
 
 GameManager::GameManager()
   : game_setting(43, 7),
-    game_state(){}
+    game_state(),
+    input_data_hisotry(){}
 
 void GameManager::start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const {
   io_handler_ptr->start_io_handler();
