@@ -1,13 +1,4 @@
-#include <iostream>
-#include "main.hpp"
-
-GameState GameState::update_state(int input, const GameState& game_state, const GameSetting& game_setting) const {
-  return GameState(
-    input,
-    game_state.current_attempt_ + 1,
-    game_setting.SECRET_NUM == input ? true : false
-    );
-}
+#include "GameManager.hpp"
 
 GameManager::GameManager()
   : game_setting(43, 7),
@@ -43,26 +34,3 @@ void GameManager::process_data(const std::string data, const std::shared_ptr<IIo
 void GameManager::restart_game() {
   game_state = GameState();
 }
-
-void CliIo::output_data(std::string data) const {
-  // whileでcinで入力をGameManagerの状態遷移の関数を実行する
-  std::cout << data << std::endl;
-}
-
-void CliIo::get_input() const {
-  std::string input;
-  std::cin >> input;
-  callback(input); // CUI出力までをやってくれる。
-}
-
-void CliIo::set_callback(std::function<void(std::string)> cb) {
-  callback = cb;
-}    
-
-void CliIo::start_io_handler() const {
-  while (true) {
-    output_data("Input the number"); // CUI出力までやってくれる これをwhileで動かせばいい。
-    get_input();
-  }
-}
-
