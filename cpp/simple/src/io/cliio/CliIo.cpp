@@ -6,10 +6,10 @@ void CliIo::output_data(std::string data) const {
 }
 
 void CliIo::get_input() const {
-  std::string input;
-  std::cin >> input;
-  InputData input_data(input);
-  callback(input_data); // CUI出力までをやってくれる。
+  std::string user_input;
+  std::cin >> user_input;
+  InputData input_data(user_input);
+  callback(input_data);
 }
 
 void CliIo::set_callback(std::function<void(InputData)> cb) {
