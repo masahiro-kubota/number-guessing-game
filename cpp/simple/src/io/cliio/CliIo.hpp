@@ -1,3 +1,5 @@
+#pragma once
+
 #include "IIoHandler.hpp"
 
 #include <iostream>
