@@ -12,7 +12,7 @@ void GameManager::process_data(const std::string data, const std::shared_ptr<IIo
   if (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
     try {
       int num = std::stoi(data);
-      // game_stateを使いまわしてる 
+      // game_stateを使いまわしてる メンバ変数に代入してある程度の不変性維持
       game_state = game_state.update_state(num, game_state, game_setting);
       if (game_state.is_success_) {
         io_handler_ptr->output_data("Correct");
