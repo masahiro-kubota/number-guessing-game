@@ -16,6 +16,6 @@ class GameManager {
   public:
     GameManager();
     void start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const;
-    void process_data(std::string data, const std::shared_ptr<IIoHandler>& io_handler_ptr);
+    void process_data(InputData data, const std::shared_ptr<IIoHandler>& io_handler_ptr);
     void restart_game();
 };

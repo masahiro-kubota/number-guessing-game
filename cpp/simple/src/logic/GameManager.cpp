@@ -8,10 +8,10 @@ void GameManager::start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) 
   io_handler_ptr->start_io_handler();
 }
 
-void GameManager::process_data(const std::string data, const std::shared_ptr<IIoHandler>& io_handler_ptr) {
+void GameManager::process_data(const InputData data, const std::shared_ptr<IIoHandler>& io_handler_ptr) {
   if (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
     try {
-      int num = std::stoi(data);
+      int num = std::stoi(data.user_input);
       // game_stateを使いまわしてる メンバ変数に代入してある程度の不変性維持
       game_state = game_state.update_state(num, game_state, game_setting);
       if (game_state.is_success_) {
