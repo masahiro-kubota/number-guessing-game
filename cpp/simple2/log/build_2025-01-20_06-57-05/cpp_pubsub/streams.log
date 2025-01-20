@@ -1,0 +1,16 @@
+[0.006s] Invoking command in '/workspace/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/humble PROMPT=%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ /usr/bin/cmake --build /workspace/build/cpp_pubsub -- -j24 -l24
+[0.035s] [35m[1mConsolidate compiler generated dependencies of target talker[0m
+[0.051s] [ 50%] [32mBuilding CXX object CMakeFiles/talker.dir/src/publish_member_function.cpp.o[0m
+[1.064s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:5:1:[m[K [01;31m[Kerror: [m[K‘[01m[KMinimalPulisher[m[K’ does not name a type; did you mean ‘[01m[KMinimalPublisher[m[K’?
+[1.064s]     5 | [01;31m[KMinimalPulisher[m[K::MinimalPublisher() {
+[1.064s]       | [01;31m[K^~~~~~~~~~~~~~~[m[K
+[1.064s]       | [32m[KMinimalPublisher[m[K
+[1.067s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:[m[K In member function ‘[01m[Kvoid MinimalPublisher::timer_callback()[m[K’:
+[1.067s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:14:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kpubliser_[m[K’ was not declared in this scope; did you mean ‘[01m[Kpulisher_[m[K’?
+[1.067s]    14 |   [01;31m[Kpubliser_[m[K->publish(message);
+[1.067s]       |   [01;31m[K^~~~~~~~~[m[K
+[1.067s]       |   [32m[Kpulisher_[m[K
+[1.258s] gmake[2]: *** [CMakeFiles/talker.dir/build.make:76: CMakeFiles/talker.dir/src/publish_member_function.cpp.o] Error 1
+[1.258s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/talker.dir/all] Error 2
+[1.258s] gmake: *** [Makefile:146: all] Error 2
+[1.261s] Invoked command in '/workspace/build/cpp_pubsub' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble PROMPT=%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ /usr/bin/cmake --build /workspace/build/cpp_pubsub -- -j24 -l24

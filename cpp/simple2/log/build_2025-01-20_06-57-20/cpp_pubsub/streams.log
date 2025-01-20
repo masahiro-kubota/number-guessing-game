@@ -1,0 +1,37 @@
+[0.006s] Invoking command in '/workspace/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/humble PROMPT=%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ /usr/bin/cmake --build /workspace/build/cpp_pubsub -- -j24 -l24
+[0.044s] [35m[1mConsolidate compiler generated dependencies of target talker[0m
+[0.066s] [ 50%] [32mBuilding CXX object CMakeFiles/talker.dir/src/publish_member_function.cpp.o[0m
+[1.083s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:[m[K In constructor ‘[01m[KMinimalPublisher::MinimalPublisher()[m[K’:
+[1.084s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:5:36:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Krclcpp::Node::Node()[m[K’
+[1.084s]     5 | MinimalPublisher::MinimalPublisher([01;31m[K)[m[K {
+[1.084s]       |                                    [01;31m[K^[m[K
+[1.084s] In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+[1.084s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+[1.084s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+[1.084s]                  from [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.hpp:8[m[K,
+[1.084s]                  from [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:1[m[K:
+[1.084s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:1294:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Krclcpp::Node::Node(const rclcpp::Node&, const string&)[m[K’
+[1.084s]  1294 |   [01;36m[KNode[m[K(
+[1.084s]       |   [01;36m[K^~~~[m[K
+[1.084s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:1294:3:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 0 provided
+[1.084s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:101:12:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Krclcpp::Node::Node(const string&, const string&, const rclcpp::NodeOptions&)[m[K’
+[1.084s]   101 |   explicit [01;36m[KNode[m[K(
+[1.084s]       |            [01;36m[K^~~~[m[K
+[1.084s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:101:12:[m[K [01;36m[Knote: [m[K  candidate expects 3 arguments, 0 provided
+[1.084s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:89:12:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Krclcpp::Node::Node(const string&, const rclcpp::NodeOptions&)[m[K’
+[1.084s]    89 |   explicit [01;36m[KNode[m[K(
+[1.084s]       |            [01;36m[K^~~~[m[K
+[1.084s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:89:12:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 0 provided
+[1.086s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:6:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kpublisher_[m[K’ was not declared in this scope; did you mean ‘[01m[Kpulisher_[m[K’?
+[1.086s]     6 |   [01;31m[Kpublisher_[m[K = this->create_publisher<std_msgs::msg::String>("topic", 10);
+[1.086s]       |   [01;31m[K^~~~~~~~~~[m[K
+[1.086s]       |   [32m[Kpulisher_[m[K
+[1.094s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:[m[K In member function ‘[01m[Kvoid MinimalPublisher::timer_callback()[m[K’:
+[1.094s] [01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:14:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kpubliser_[m[K’ was not declared in this scope; did you mean ‘[01m[Kpulisher_[m[K’?
+[1.094s]    14 |   [01;31m[Kpubliser_[m[K->publish(message);
+[1.094s]       |   [01;31m[K^~~~~~~~~[m[K
+[1.094s]       |   [32m[Kpulisher_[m[K
+[1.394s] gmake[2]: *** [CMakeFiles/talker.dir/build.make:76: CMakeFiles/talker.dir/src/publish_member_function.cpp.o] Error 1
+[1.394s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/talker.dir/all] Error 2
+[1.394s] gmake: *** [Makefile:146: all] Error 2
+[1.395s] Invoked command in '/workspace/build/cpp_pubsub' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble PROMPT=%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ /usr/bin/cmake --build /workspace/build/cpp_pubsub -- -j24 -l24

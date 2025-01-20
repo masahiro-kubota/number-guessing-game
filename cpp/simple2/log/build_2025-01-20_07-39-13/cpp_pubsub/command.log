@@ -1,0 +1,2 @@
+Invoking command in '/workspace/build/cpp_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble PROMPT=%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ /usr/bin/cmake --build /workspace/build/cpp_pubsub -- -j24 -l24
+Invoked command in '/workspace/build/cpp_pubsub' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble PROMPT=%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ /usr/bin/cmake --build /workspace/build/cpp_pubsub -- -j24 -l24
