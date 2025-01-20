@@ -9,7 +9,7 @@ void CliIo::get_input() const {
   std::string user_input;
   std::cin >> user_input;
   InputData input_data(user_input);
-  callback(input_data);
+  callback(input_data); // GameManagerの状態遷移の関数を実行する
 }
 
 void CliIo::set_callback(std::function<void(InputData)> cb) {
@@ -18,7 +18,7 @@ void CliIo::set_callback(std::function<void(InputData)> cb) {
 
 void CliIo::start_io_handler() const {
   while (true) {
-    output_data("Input the number"); // CUI出力までやってくれる これをwhileで動かせばいい。
+    output_data("Input the number");
     get_input();
   }
 }

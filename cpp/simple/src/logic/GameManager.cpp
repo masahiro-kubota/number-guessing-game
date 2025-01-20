@@ -1,22 +1,27 @@
 #include "GameManager.hpp"
 
+#include <iostream>
+
 GameManager::GameManager()
   : game_setting(43, 7),
     game_state(),
-    input_data_hisotry(){}
+    input_data_history(7){}
 
 void GameManager::start_game(const std::shared_ptr<IIoHandler>& io_handler_ptr) const {
-  io_handler_ptr->start_io_handler();
+  io_handler_ptr->start_io_handler(); // ioの入力待ちになる
 }
 
 void GameManager::process_data(const InputData data, const std::shared_ptr<IIoHandler>& io_handler_ptr) {
   if (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
     try {
       int num = std::stoi(data.user_input);
-      // game_stateを使いまわしてる メンバ変数に代入してある程度の不変性維持
       game_state = game_state.update_state(num, game_state, game_setting);
+      input_data_history = update_input_data_history();
       if (game_state.is_success_) {
         io_handler_ptr->output_data("Correct");
+        for (GameState gs : input_data_history) {
+          io_handler_ptr->output_data(std::to_string(gs.last_input_number_));
+        }
         restart_game();
       } else {
         io_handler_ptr->output_data("Incorrect");
@@ -31,6 +36,14 @@ void GameManager::process_data(const InputData data, const std::shared_ptr<IIoHa
     restart_game();
   }
 }
+
+
+std::vector<GameState> GameManager::update_input_data_history() {
+  input_data_history[game_state.current_attempt_-1] = game_state;
+  std::vector<GameState> updated_input_data_history = input_data_history;
+  return updated_input_data_history;
+}
+
 
 void GameManager::restart_game() {
   game_state = GameState();
