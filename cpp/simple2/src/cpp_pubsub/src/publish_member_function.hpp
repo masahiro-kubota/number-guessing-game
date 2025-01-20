@@ -16,10 +16,7 @@ class MinimalPublisher : public rclcpp::Node {
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
-    void topic_callback(const std_msgs::msg::String & msg) const
-    {
-      RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
-    }
+    void topic_callback(const std_msgs::msg::String & msg) const;
     size_t count_;
 };
 

@@ -18,7 +18,7 @@ void MinimalPublisher::timer_callback() {
   publisher_->publish(message);
 }
 
-void Minimtopic_callback(const std_msgs::msg::String & msg) {
+void MinimalPublisher::topic_callback(const std_msgs::msg::String & msg) const {
   RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
 } 
 
