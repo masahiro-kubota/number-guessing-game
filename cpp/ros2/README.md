@@ -2,6 +2,7 @@
 make build
 make run
 colcon build --symlink-install
+. install/setup.zsh
 ros2 run ngg  
 
 # Test
