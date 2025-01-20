@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IIoHandler.hpp"
-
 #include <iostream>
+
+#include "IIoHandler.hpp"
 
 class CliIo : public IIoHandler{
   private:

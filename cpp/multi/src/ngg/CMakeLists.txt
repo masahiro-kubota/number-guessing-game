@@ -7,20 +7,21 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
 # ソースファイルとヘッダーファイルをリストとして設定
 set(SRCS
     src/main.cpp
     src/core/GameState.cpp
     src/io/cliio/CliIo.cpp
+    src/io/rosio/RosIo.cpp
     src/logic/GameManager.cpp)
 
 # 実行可能ファイルを生成
 # 'main'という名前の実行ファイルを指定されたソースファイルから作成
 add_executable(main ${SRCS})
+ament_target_dependencies(main rclcpp std_msgs)
 
 install(TARGETS
   main
