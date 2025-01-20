@@ -2,8 +2,9 @@
 
 #include "GameSetting.hpp"
 
-class GameState {
-public:
+struct GameState {
+  // constメンバ変数にするとGameStateの再代入ができなくなる。
+  // どこでもメンバ変数を変えられるの危ないけど、変更したらGameStateに再代入することで明確化するようにする。
   int last_input_number_;
   int current_attempt_;
   bool is_success_;
