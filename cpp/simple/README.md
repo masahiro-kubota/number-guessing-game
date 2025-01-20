@@ -1,5 +1,10 @@
 ```
-# use CMake
+# docker
+make build
+make run
+```
+```
+# build C++
 mkdir build 
 cd build
 cmake ..
