@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'talker = ngg.publisher_member_function:main',
+            'listener = ngg.subscriber_member_function:main',
         ],
     },
 )
