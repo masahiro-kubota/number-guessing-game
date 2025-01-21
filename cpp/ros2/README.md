@@ -3,8 +3,14 @@ make build
 make run
 colcon build --symlink-install
 . install/setup.zsh
-ros2 run ngg  
-
+ros2 run ngg talker
+```
+```
+make exec
+. install/setup.zsh
+ros2 run ngg listener
+```
+```
 # Test
 colcon test
 ```
