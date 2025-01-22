@@ -6,6 +6,3 @@ colcon build --symlink-install --packages-select ngg
 . install/setup.zsh
 ros2 run ngg talker 
 ```
-
-# Test
-colcon test
