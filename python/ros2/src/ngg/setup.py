@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = ngg.publisher_member_function:main',
-            'listener = ngg.subscriber_member_function:main',
+            'talker = ngg.publisher.main:main',
+            'listener = ngg.subscriber.main:main',
         ],
     },
 )
