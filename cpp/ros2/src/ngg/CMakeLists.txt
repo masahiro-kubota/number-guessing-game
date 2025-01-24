@@ -22,8 +22,13 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 # 実行ファイルを定義して、そのソースファイルを指定
-add_executable(talker src/publisher_member_function.cpp)
-add_executable(listener src/subscriber_member_function.cpp)
+add_executable(talker 
+    src/publisher/publisher_member_function.cpp
+    src/publisher/main.cpp)
+  
+add_executable(listener
+    src/subscriber/subscriber_member_function.cpp
+    src/subscriber/main.cpp)
 
 # talkerとlistenerに必要な依存ライブラリをリンク
 ament_target_dependencies(talker rclcpp std_msgs)
@@ -40,7 +45,7 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
 
   # テストの追加 (src/subscriber_member_function.cpp を一時的に除外)
-  ament_add_gtest(test_game_logic test/test_game_logic.cpp src/subscriber_member_function.cpp)
+  ament_add_gtest(test_game_logic test/test_game_logic.cpp src/subscriber/subscriber_member_function.cpp)
   if(TARGET test_game_logic)
     # テスト対象のインクルードディレクトリを追加
     target_include_directories(test_game_logic PRIVATE src)

@@ -40,12 +40,3 @@ GameState GameState::update_state(int input, GameState game_state, GameSetting g
     );
 }
 
-#ifndef GTEST_MAIN
-int main(int argc, char * argv[])
-{
-  rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<MinimalSubscriber>());
-  rclcpp::shutdown();
-  return 0;
-}
-#endif 

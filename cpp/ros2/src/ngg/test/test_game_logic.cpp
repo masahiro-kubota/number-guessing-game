@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "subscriber_member_function.hpp"
+#include "subscriber/subscriber_member_function.hpp"
 
 
 TEST(GameStateTest, UpdateStateSuccess) {
