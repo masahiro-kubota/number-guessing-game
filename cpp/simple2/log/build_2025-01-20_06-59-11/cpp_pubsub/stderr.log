@@ -1,8 +1,0 @@
-[01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:[m[K In member function ‘[01m[Kvoid MinimalPublisher::timer_callback()[m[K’:
-[01m[K/workspace/src/cpp_pubsub/src/publish_member_function.cpp:14:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kpubliser_[m[K’ was not declared in this scope; did you mean ‘[01m[Kpublisher_[m[K’?
-   14 |   [01;31m[Kpubliser_[m[K->publish(message);
-      |   [01;31m[K^~~~~~~~~[m[K
-      |   [32m[Kpublisher_[m[K
-gmake[2]: *** [CMakeFiles/talker.dir/build.make:76: CMakeFiles/talker.dir/src/publish_member_function.cpp.o] Error 1
-gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/talker.dir/all] Error 2
-gmake: *** [Makefile:146: all] Error 2

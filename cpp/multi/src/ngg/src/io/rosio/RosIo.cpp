@@ -1,16 +1,14 @@
 #include "RosIo.hpp"
 
-RosIo::RosIo() : Node("number_gussing_game") {
-  publisher_ = this->create_publisher<std_msgs::msg::String>("topic_output", 10);
+RosIoCore::RosIoCore(RosIo* ros_io) : Node("number_gussing_game") {
+  ros_io->publisher_ = this->create_publisher<std_msgs::msg::String>("topic_output", 10);
   subscription_ = this->create_subscription<std_msgs::msg::String>(
-    "topic_input", 10, std::bind(&RosIo::internal_callback, this, std::placeholders::_1));
+    "topic_input", 10, std::bind(&RosIoCore::internal_callback, this, std::placeholders::_1, ros_io)); // RosIoのcallback関数を呼び出す
 }
 
-void RosIo::internal_callback(const std_msgs::msg::String::SharedPtr msg) {
-  callback(InputData{msg->data});
+void RosIoCore::internal_callback(const std_msgs::msg::String::SharedPtr msg, RosIo* ros_io) {
+  ros_io->callback(InputData{msg->data});
 }
-
-
 
 void RosIo::output_data(std::string data) const {
   // whileでcinで入力をGameManagerの状態遷移の関数を実行する
@@ -24,8 +22,9 @@ void RosIo::set_callback(std::function<void(InputData)> cb) {
   callback = cb;
 }
 
-void start_io_handler() const {
+
+void RosIo::start_io_handler() const { // ここでNodeのインスタンスを生成している。
   rclcpp::init(0, nullptr);
-  rclcpp::spin(std::make_shared<RosIo>());
+  rclcpp::spin(std::make_shared<RosIoCore>(this));
   rclcpp::shutdown();
 }

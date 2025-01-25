@@ -23,6 +23,7 @@ void MinimalPublisher::topic_callback(const std_msgs::msg::String & msg) const {
 } 
 
 void start_ros2_publisher() {
+
   rclcpp::init(0, nullptr);
   rclcpp::spin(std::make_shared<MinimalPublisher>());
   rclcpp::shutdown();
