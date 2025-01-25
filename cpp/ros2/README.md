@@ -12,7 +12,8 @@ ros2 run ngg listener
 ```
 ```
 # Test
-colcon test
+# 詳細なログありtest
+colcon test --event-handlers console_direct+
 ```
 
 ROS2はmsgがinterfaceになっていて、pub/sub間の依存関係が分離されている。
