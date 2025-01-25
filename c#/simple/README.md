@@ -18,5 +18,7 @@ IUserInterfaceの関数名が終わってる。
 - こうすることで依存関係の逆転ができていて、Business層の実装を知らずにPresentation層に追加実装ができる（Presentation層側はInterfaceをoverrideするだけでいいし、Business側はInterfaceのメソッドを使っておけばいい。
 
 - 右から左に向かって依存の流れができている（InterfaceとGameManagerはまとめて1つ考える）。
+
+※Business層はPresentation層からの入力は受け取って戻り値を返すことはできるが、Business層の好きなタイミングで出力することができない。1入力1出力しかできない。C++の方では改善されている。
 ![Qiita](class_mermaid.png "Qiita")
 
