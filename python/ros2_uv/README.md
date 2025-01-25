@@ -3,3 +3,9 @@ rosdepを使わないので、複数パッケージに対してrosdep installで
 
 シェルスクリプトをros2 run <package> <sh file>をpythonファイルでやっている感じ。
 https://qiita.com/GesonAnko/items/510eeade1f8ada302b9b
+
+```
+# pygameをimportしている
+source ngg/src/ngg/.venv/bin/activate
+ros2 run ngg publisher.py
+```

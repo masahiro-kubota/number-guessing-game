@@ -1,6 +1,8 @@
 import rclpy
+import pygame
 from rclpy.node import Node
 from std_msgs.msg import String
+
 
 class MinimalPublisher(Node):
     def __init__(self):

@@ -7,7 +7,9 @@ authors = [
     { name = "norikenpi", email = "norikenpi@gmail.com" }
 ]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "pygame>=2.6.1",
+]
 
 [build-system]
 requires = ["hatchling"]
