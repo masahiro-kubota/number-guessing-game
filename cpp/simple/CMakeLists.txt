@@ -13,6 +13,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # C++の拡張機能を無効に設定（標準に準拠）
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# デフォルトのビルドタイプをDebugにして、-g -O0などのデバッグ用のフラグが自動的に有効になる
+set(CMAKE_BUILD_TYPE Debug)
+
+# アドレスサニタイザーを有効化。メモリ関連の問題を実行時に検出する
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address")  # Debugビルド特有のフラグ
+
 # コンパイル時のオプションを設定
 # -Wall: 一般的な警告をすべて有効化
 # -Wextra: 追加の警告も有効化
