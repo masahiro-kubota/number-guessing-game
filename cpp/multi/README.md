@@ -11,6 +11,12 @@ make exec
 . install/setup.zsh
 ros2 topic pub /topic_input std_msgs/msg/String "{data: 43}" --once
 ```
+```
+# ros
+make exec
+. install/setup.zsh
+ros2 topic echo /topic_output
+```
 
 ゲームロジックのコードを変えずに任意のIO実装でき、実行ファイルの引数でそのIOを変更できる。
 C#ではロジックからの任意のタイミングで出力ができなかったが、IIoHandler::output_data(std::string data)をoverrideすることで出力できる。
