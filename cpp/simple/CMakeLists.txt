@@ -17,7 +17,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_BUILD_TYPE Debug)
 
 # アドレスサニタイザーを有効化。メモリ関連の問題を実行時に検出する
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address")  # Debugビルド特有のフラグ
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb")
 
 # コンパイル時のオプションを設定
 # -Wall: 一般的な警告をすべて有効化
