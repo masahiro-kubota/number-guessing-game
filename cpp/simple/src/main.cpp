@@ -4,10 +4,14 @@
 
 #include <glog/logging.h>
 
-void func() {
+void throw_function() {
   throw;
 }
 
+void crash_function() {
+  int *p = NULL;
+  *p = 1;
+}
 
 int main(int /*argc*/, char *argv[]){
   // google glogの初期化
@@ -16,7 +20,9 @@ int main(int /*argc*/, char *argv[]){
   // クラッシュ時にスタックトレースを吐くシグナルハンドラを設定
   google::InstallFailureSignalHandler();
 
-  // func(); # call std::terminate()
+  throw_function(); // call std::terminate()
+  //crash_function(); // segmentation fault
+
   // ポリモーフィズムを使うためには、値ではなくポインタを生成するしかない。
   std::shared_ptr<IIoHandler> io_handler_ptr = std::make_shared<CliIo>(); // プレゼンテーション層の初期化
   GameManager game_manager;
