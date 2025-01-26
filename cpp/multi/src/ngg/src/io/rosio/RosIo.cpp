@@ -1,7 +1,6 @@
 #include "RosIo.hpp"
 
 void RosIo::output_data(std::string data) const {
-  // whileでcinで入力をGameManagerの状態遷移の関数を実行する
   std::cout << data << std::endl;
   auto message = std_msgs::msg::String();
   message.data = data;
