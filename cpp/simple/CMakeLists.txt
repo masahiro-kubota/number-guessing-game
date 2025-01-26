@@ -18,6 +18,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # -Wextra: 追加の警告も有効化
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
+find_package(glog REQUIRED)
+
 # ソースファイルとヘッダーファイルをリストとして設定
 set(SRCS
     src/main.cpp
@@ -36,3 +38,5 @@ target_include_directories(main
         src/io
         src/logic
 )
+
+target_link_libraries(main PRIVATE glog::glog)

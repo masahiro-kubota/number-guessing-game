@@ -2,8 +2,21 @@
 #include "GameManager.hpp"
 #include "IIoHandler.hpp"
 
+#include <glog/logging.h>
 
-int main(){
+void func() {
+  throw;
+}
+
+
+int main(int /*argc*/, char *argv[]){
+  // google glogの初期化
+  google::InitGoogleLogging(argv[0]);
+
+  // クラッシュ時にスタックトレースを吐くシグナルハンドラを設定
+  google::InstallFailureSignalHandler();
+
+  // func(); # call std::terminate()
   // ポリモーフィズムを使うためには、値ではなくポインタを生成するしかない。
   std::shared_ptr<IIoHandler> io_handler_ptr = std::make_shared<CliIo>(); // プレゼンテーション層の初期化
   GameManager game_manager;

@@ -2,6 +2,7 @@
 # docker
 make build
 make run
+apt install libgoogle-glog-dev
 ```
 ```
 # build C++
@@ -12,4 +13,3 @@ cmake --build . #make
 ./main
 ```
 
-macだとCMakeLists.txtを使うときにg++がうまく見つけられない。Makeだと問題ない。docker使えばCmakeもOK。
