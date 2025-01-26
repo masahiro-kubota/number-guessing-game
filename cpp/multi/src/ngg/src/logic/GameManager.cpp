@@ -20,9 +20,8 @@ void GameManager::process_data(const InputData data, const std::shared_ptr<IIoHa
       input_data_history = update_input_data_history();
       if (game_state.is_success_) {
         io_handler_ptr->output_data("Correct");
-        for (GameState gs : input_data_history) {
-          io_handler_ptr->output_data(std::to_string(gs.last_input_number_));
-        }
+        std::string history_std = convert_to_string(input_data_history);
+        io_handler_ptr->output_data(history_std);
         restart_game();
       } else {
         io_handler_ptr->output_data("Incorrect");
@@ -38,6 +37,14 @@ void GameManager::process_data(const InputData data, const std::shared_ptr<IIoHa
   }
 }
 
+std::string GameManager::convert_to_string(const std::vector<GameState>& input_data_history) const {
+  std::ostringstream oss; // 文字列ストリーム。バッファ用
+  std::transform(input_data_history.begin(), input_data_history.end(), std::ostream_iterator<std::string>(oss, " "),
+  [](const GameState& gs) {
+    return std::to_string(gs.last_input_number_);
+  });
+  return oss.str();
+}
 
 std::vector<GameState> GameManager::update_input_data_history() {
   input_data_history[game_state.current_attempt_-1] = game_state;

@@ -4,6 +4,9 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
 #include <vector>
 
 #include "GameSetting.hpp"
@@ -22,4 +25,5 @@ class GameManager {
     void process_data(InputData data, const std::shared_ptr<IIoHandler>& io_handler_ptr);
     std::vector<GameState> update_input_data_history();
     void restart_game();
+    std::string convert_to_string(const std::vector<GameState>& input_data_history) const;
 };
