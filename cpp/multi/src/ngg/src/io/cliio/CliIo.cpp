@@ -16,7 +16,7 @@ void CliIo::set_callback(std::function<void(InputData)> cb) {
   callback = cb;
 }    
 
-void CliIo::start_io_handler() const {
+void CliIo::start_io_handler() {
   while (true) {
     output_data("Input the number");
     get_input();

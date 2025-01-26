@@ -11,5 +11,5 @@ class CliIo : public IIoHandler{
     void get_input() const;
     void output_data(std::string data) const override;
     void set_callback(std::function<void(InputData)> cb) override;
-    void start_io_handler() const override;
+    void start_io_handler() override;
 };

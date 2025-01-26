@@ -14,6 +14,7 @@ find_package(std_msgs REQUIRED)
 set(SRCS
     src/main.cpp
     src/core/GameState.cpp
+    src/io/IoFactory.cpp
     src/io/cliio/CliIo.cpp
     src/io/rosio/RosIo.cpp
     src/logic/GameManager.cpp)

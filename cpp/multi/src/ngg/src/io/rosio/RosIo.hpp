@@ -13,7 +13,7 @@ class RosIo : public IIoHandler {
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     void output_data(std::string data) const override;
     void set_callback(std::function<void(InputData)> cb) override;
-    void start_io_handler() const override;
+    void start_io_handler() override;
 };
 
 class RosIoCore : public rclcpp::Node {
