@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
         isSuccess = false;
         secretNumber = 43;
 
-        SetCountText();
         winTextObject.SetActive(false);
     }
 
@@ -43,9 +42,10 @@ public class PlayerController : MonoBehaviour
 
     void SetCountText()
     {
-      countText.text = "Count: " + count.ToString() + "/12";
+      countText.text = "Incorrect";
       if (isSuccess)
       {
+        countText.text = "Correct";
         winTextObject.SetActive(true);
         Destroy(GameObject.FindGameObjectWithTag("Enemy"));
       }
