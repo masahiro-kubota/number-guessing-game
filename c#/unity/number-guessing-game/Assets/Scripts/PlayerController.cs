@@ -13,14 +13,22 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
     private Rigidbody rb;
     private int count;
+
+    private int secretNumber;
+
+    private bool isSuccess;
     private float movementX;
     private float movementY;
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        
         rb = GetComponent<Rigidbody>();
         count = 0;
+        isSuccess = false;
+        secretNumber = 43;
 
         SetCountText();
         winTextObject.SetActive(false);
@@ -36,7 +44,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
       countText.text = "Count: " + count.ToString() + "/12";
-      if (count >= 12)
+      if (isSuccess)
       {
         winTextObject.SetActive(true);
         Destroy(GameObject.FindGameObjectWithTag("Enemy"));
@@ -53,7 +61,7 @@ public class PlayerController : MonoBehaviour
     {
       if (other.gameObject.CompareTag("Enemy"))
       {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         winTextObject.SetActive(true);
         winTextObject.GetComponent<TextMeshProUGUI>().text = "Game Over!";
       }
@@ -66,6 +74,16 @@ public class PlayerController : MonoBehaviour
         other.gameObject.SetActive(false);
         count++;
         SetCountText();
+        string tmpNumber = other.GetComponentInChildren<TextMeshPro>().text;
+        Debug.Log(tmpNumber);
+        if (int.Parse(tmpNumber) == secretNumber)
+        {
+          isSuccess = true;
+          Debug.Log("It's a match!");
+          SetCountText();
+        }
       }
     }
+
+
 }
