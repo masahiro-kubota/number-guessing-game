@@ -6,6 +6,21 @@ MinimalSubscriber::MinimalSubscriber()
   game_state() {
   subscription_ = this->create_subscription<std_msgs::msg::String>(
     "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+  updater_ = std::make_unique<diagnostic_updater::Updater>(this);
+  updater_->setHardwareID("number_guessing_game");
+  updater_->add("game_status", this, &MinimalSubscriber::produce_diagnostics);
+}
+
+void MinimalSubscriber::produce_diagnostics(diagnostic_updater::DiagnosticStatusWrapper & stat) {
+  if (game_state.is_success_) {
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::OK, "Game completed successfully");
+  } else if (game_state.current_attempt_ >= game_setting.MAX_ATTEMPTS) {
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::ERROR, "Game over - max attempts reached");
+  } else {
+    stat.summary(
+      diagnostic_msgs::msg::DiagnosticStatus::WARN,
+      "Game in progress");
+  }
 }
 
 void MinimalSubscriber::topic_callback(const std_msgs::msg::String & msg) {
@@ -20,6 +35,7 @@ void MinimalSubscriber::topic_callback(const std_msgs::msg::String & msg) {
         } else {
           std::cout << "Incorrect" << std::endl;
         }
+        updater_->force_update();
       } catch (const std::invalid_argument&) {
         // 例外オブジェクトを使わない場合は、const参照を使わなくてもいい。
         std::cout << "Invalid Input" << std::endl;
@@ -29,6 +45,7 @@ void MinimalSubscriber::topic_callback(const std_msgs::msg::String & msg) {
     }
     if (game_state.current_attempt_ == game_setting.MAX_ATTEMPTS) {
       std::cout << "max attempts" << std::endl;
+      updater_->force_update();
     }
 }
 

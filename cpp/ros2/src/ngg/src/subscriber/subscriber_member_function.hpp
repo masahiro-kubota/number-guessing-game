@@ -4,8 +4,9 @@
 #include <functional>
 #include <memory>
 
-#include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
+#include <rclcpp/rclcpp.hpp>
+#include <std_msgs/msg/string.hpp>
+#include <diagnostic_updater/diagnostic_updater.hpp>
 
 using std::placeholders::_1;
 
@@ -34,7 +35,10 @@ public:
 
 private:
   void topic_callback(const std_msgs::msg::String & msg);
+  void produce_diagnostics(diagnostic_updater::DiagnosticStatusWrapper & stat);
+  
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+  std::unique_ptr<diagnostic_updater::Updater> updater_;
   GameSetting game_setting;
   GameState game_state;
 };

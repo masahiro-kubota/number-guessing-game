@@ -20,6 +20,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 # std_msgs（標準メッセージ型）を探す
 find_package(std_msgs REQUIRED)
+# diagnostic_updaterパッケージを追加
+find_package(diagnostic_updater REQUIRED)
 
 # 実行ファイルを定義して、そのソースファイルを指定
 add_executable(talker 
@@ -32,7 +34,7 @@ add_executable(listener
 
 # talkerとlistenerに必要な依存ライブラリをリンク
 ament_target_dependencies(talker rclcpp std_msgs)
-ament_target_dependencies(listener rclcpp std_msgs)
+ament_target_dependencies(listener rclcpp std_msgs diagnostic_updater)
 
 # 実行可能ファイルのインストール先を指定
 install(TARGETS
@@ -50,7 +52,7 @@ if(BUILD_TESTING)
     # テスト対象のインクルードディレクトリを追加
     target_include_directories(test_game_logic PRIVATE src)
     # テストで使うライブラリをリンク
-    ament_target_dependencies(test_game_logic rclcpp std_msgs)
+    ament_target_dependencies(test_game_logic rclcpp std_msgs diagnostic_updater)
     # GTEST_MAIN を有効にする
     target_compile_definitions(test_game_logic PRIVATE GTEST_MAIN)
   endif()

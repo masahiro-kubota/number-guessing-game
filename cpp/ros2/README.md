@@ -1,6 +1,7 @@
 ```
 make build
 make run
+apt install ros-humble-diagnostic-updater
 colcon build --symlink-install
 . install/setup.zsh
 ros2 run ngg talker
