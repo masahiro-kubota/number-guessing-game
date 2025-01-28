@@ -1,14 +1,18 @@
 # イメージ名とコンテナ名を変数として定義
-IMAGE_NAME = ros2-kubota
-CONTAINER_NAME = ros2-container
+IMAGE_NAME = cpp-simple-kubota
+CONTAINER_NAME = cpp-simple-container
+DOCKERFILE_NAME = Dockerfiles/ros2-dockerfile
 # 現在のディレクトリを取得するMakefileの記法
 WORKSPACE = $(shell pwd)
 # ビルドターゲット
 build:
-	docker build -t $(IMAGE_NAME) .
+	docker build -f ${DOCKERFILE_NAME} -t $(IMAGE_NAME) .
 
 # 実行ターゲット
 run:
+	@echo "Container Name: $(CONTAINER_NAME)"
+	@echo "Image Name: $(IMAGE_NAME)"
+	@echo "Workspace: $(WORKSPACE)"
 	docker run --rm -v $(WORKSPACE):/workspace -it --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 # 既存のコンテナに接続するターゲット
