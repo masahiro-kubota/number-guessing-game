@@ -1,0 +1,6 @@
+[submodule "cpp/ros2/Dockerfiles"]
+	path = cpp/ros2/Dockerfiles
+	url = git@github.com:masahiro-kubota/Dockerfiles.git
+[submodule "cpp/simple/Dockerfiles"]
+	path = cpp/simple/Dockerfiles
+	url = git@github.com:masahiro-kubota/Dockerfiles.git
