@@ -1,7 +1,9 @@
 ```
 # core dumpを有効にする
+ulimit -c
 ulimit -c unlimited
 # coredumpの出力先をカレントディレクトリにする
+sudo sysctl kernel.core_pattern
 sudo sysctl -w kernel.core_pattern=core.%e.%p
 ```
 
