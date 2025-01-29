@@ -19,7 +19,7 @@ build:
 		--build-arg USER_GID=$(GID) \
 		--build-arg CONTAINER_NAME=$(CONTAINER_NAME) \
 		-f $(DOCKERFILE_NAME) \
-		-t $(IMAGE_NAME)-$(USERNAME) .
+		-t $(IMAGE_NAME)-$(USERNAME) Dockerfiles
 
 # 実行ターゲット
 run:
@@ -28,6 +28,7 @@ run:
 	@echo "User: $(USERNAME) (UID: $(UID), GID: $(GID))"
 	docker run --rm -v $(WORKSPACE):/workspace \
 		--name $(CONTAINER_NAME)-$(USERNAME) \
+		--network host \
 		-it $(IMAGE_NAME)-$(USERNAME)
 
 # 既存のコンテナに接続するターゲット
