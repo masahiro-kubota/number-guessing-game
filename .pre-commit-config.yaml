@@ -1,0 +1,8 @@
+repos:
+  - repo: https://github.com/pocc/pre-commit-hooks-clang
+    rev: v0.1.4
+    hooks:
+      - id: clang-tidy
+        args: ["--fix-errors", "--header-filter=.*"]
+        files: "\\.(cpp|hpp)$"
+

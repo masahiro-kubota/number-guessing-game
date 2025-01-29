@@ -14,6 +14,11 @@ make run
 ```
 
 ```
+# check
+clang-tidy src/main.cpp -p build --header-filter='.*'
+```
+
+```
 # build C++
 mkdir build 
 cd build

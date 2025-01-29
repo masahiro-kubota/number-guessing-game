@@ -4,3 +4,6 @@
 [submodule "cpp/simple/Dockerfiles"]
 	path = cpp/simple/Dockerfiles
 	url = git@github.com:masahiro-kubota/Dockerfiles.git
+[submodule "Dockerfiles"]
+	path = Dockerfiles
+	url = git@github.com:masahiro-kubota/Dockerfiles.git

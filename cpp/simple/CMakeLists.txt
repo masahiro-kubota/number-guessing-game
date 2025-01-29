@@ -24,6 +24,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb")
 # -Wextra: 追加の警告も有効化
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
+# For cland-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(glog REQUIRED)
 
 # ソースファイルとヘッダーファイルをリストとして設定
