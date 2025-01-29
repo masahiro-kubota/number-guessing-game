@@ -14,9 +14,6 @@ make run
 ```
 
 ```
-# install glog, gdb
-apt install -y libgoogle-glog-dev gdb
-
 # build C++
 mkdir build 
 cd build
