@@ -9,3 +9,8 @@
 4. The end of the game
     - On success: You'll see a congratulatory message with your attempt count and completion time.
     - On failure: You'll see the correct number.
+
+```
+git clone --recursive git@github.com:masahiro-kubota/number-guessing-game.git
+
+```
