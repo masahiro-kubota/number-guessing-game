@@ -22,8 +22,8 @@ clang-tidy src/main.cpp -p build --header-filter='.*'
 # build C++
 mkdir build 
 cd build
-cmake ..
-cmake --build . #make
+cmake -G "Ninja" ..
+ninja
 ./main
 
 # analyze coredump
