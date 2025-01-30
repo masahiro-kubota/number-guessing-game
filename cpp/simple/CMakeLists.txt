@@ -7,9 +7,6 @@ project(NumberGuessingGame LANGUAGES CXX)
 # C++の標準バージョンをC++17に設定
 set(CMAKE_CXX_STANDARD 17)
 
-# C++標準バージョンの指定を必須に設定
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 # C++の拡張機能を無効に設定（標準に準拠）
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -27,6 +24,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 # For cland-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# For glog
 find_package(glog REQUIRED)
 
 # ソースファイルとヘッダーファイルをリストとして設定
