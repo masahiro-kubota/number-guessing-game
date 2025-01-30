@@ -1,6 +1,4 @@
 ```
-make build
-make run
 colcon build --symlink-install
 . install/setup.zsh
 ./build/ngg/main <io_type> # cli, ros
