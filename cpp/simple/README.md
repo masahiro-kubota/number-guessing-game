@@ -8,12 +8,6 @@ sudo sysctl -w kernel.core_pattern=core.%e.%p
 ```
 
 ```
-# docker
-make build
-make run
-```
-
-```
 # check
 clang-tidy src/main.cpp -p build --header-filter='.*'
 ```
