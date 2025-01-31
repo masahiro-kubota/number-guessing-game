@@ -1,3 +1,5 @@
+
+### In the root directory create a docker container and work inside it.
 ```
 colcon build --symlink-install
 . install/setup.zsh
