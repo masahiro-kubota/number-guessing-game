@@ -19,10 +19,17 @@ cd build
 cmake -G "Ninja" ..
 ninja
 ./main
+```
 
+```
+# modify to crash
+vim src/main.cpp
+ninja
+./main # crash
 # analyze coredump
 gdb main core.main.<PID>
 ```
+
 
 ```
 [ros2-custom] root:/workspace/build$ gdb main core.main.716 
