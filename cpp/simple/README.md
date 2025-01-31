@@ -24,7 +24,7 @@ ninja
 
 ```
 # modify to crash
-vim src/main.cpp
+vim ../src/main.cpp
 ninja
 ./main # crash
 # analyze coredump
