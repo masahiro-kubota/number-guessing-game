@@ -6,6 +6,7 @@ ulimit -c unlimited
 sudo sysctl kernel.core_pattern
 sudo sysctl -w kernel.core_pattern=core.%e.%p
 ```
+### In the root directory create a docker container and work inside it.
 
 ```
 # check
