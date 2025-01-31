@@ -32,7 +32,7 @@ gdb main core.main.<PID>
 ```
 <details>
 
-<summary>gdb</summary>
+<summary>gdb main core.main.716 </summary>
 
 ```
 [ros2-custom] root:/workspace/build$ gdb main core.main.716 
