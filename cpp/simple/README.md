@@ -30,7 +30,9 @@ ninja
 # analyze coredump
 gdb main core.main.<PID>
 ```
+<details>
 
+<summary>gdb</summary>
 
 ```
 [ros2-custom] root:/workspace/build$ gdb main core.main.716 
@@ -66,6 +68,9 @@ p = 0x0
 $1 = (int *) 0x0
 (gdb) 
 ```
+
+</details>
+
 
 
 
