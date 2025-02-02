@@ -18,8 +18,12 @@ ninja
 ```
 
 ```
-# check
-clang-tidy src/main.cpp -p build --header-filter='.*'
+# clang-format コード整形
+find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec clang-format -i {} +
+# cpplint google C++ スタイルチェック
+find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec cpplint {} +
+# clang-tidy 静的解析
+find src -name "*.cpp" -o -name "*.h" | xargs clang-tidy -p build --header-filter='.*'
 ```
 
 ```
