@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 # プロジェクト名と使用する言語を指定
 project(NumberGuessingGame LANGUAGES CXX)
 
+include("${CMAKE_SOURCE_DIR}/FormatFilesWithClangFormat.cmake")
 include("${CMAKE_SOURCE_DIR}/DoClangTidy.cmake")
 
 # C++の標準バージョンをC++17に設定
@@ -27,6 +28,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 # For glog
 find_package(glog REQUIRED)
 
+# For manual Clang-Tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # For manual clang-tidy
 
 # ソースファイルとヘッダーファイルをリストとして設定
@@ -42,8 +44,9 @@ set(TARGET main)
 # 'main'という名前の実行ファイルを指定されたソースファイルから作成
 add_executable(${TARGET} ${SRCS})
 
-# For cland-tidy
+clang_format(${TARGET})
 clang_tidy(${TARGET})
+
 
 # インクルードパスを設定
 target_include_directories(${TARGET}
