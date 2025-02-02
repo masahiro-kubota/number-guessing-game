@@ -9,17 +9,17 @@ sudo sysctl -w kernel.core_pattern=core.%e.%p
 ### In the root directory create a docker container and work inside it.
 
 ```
-# check
-clang-tidy src/main.cpp -p build --header-filter='.*'
-```
-
-```
 # build C++
 mkdir build 
 cd build
 cmake -G "Ninja" ..
 ninja
 ./main
+```
+
+```
+# check
+clang-tidy src/main.cpp -p build --header-filter='.*'
 ```
 
 ```
