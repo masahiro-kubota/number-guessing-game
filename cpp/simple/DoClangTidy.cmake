@@ -22,7 +22,7 @@ function(clang_tidy target)
       # - CXX_CLANG_TIDY: C++ 言語のソースコードに clang-tidy を適用
       # -fix と -fix-errors オプションを指定し、コードの修正を自動適用
       set_target_properties(${target} PROPERTIES
-        CXX_CLANG_TIDY "${CLANG_TIDY_EXE};-fix;-fix-errors;--header-filter=.*")
+        CXX_CLANG_TIDY "${CLANG_TIDY_EXE};--header-filter=.*")
     endif()
   endif()
 endfunction()

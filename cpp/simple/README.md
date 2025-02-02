@@ -23,12 +23,13 @@ find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec clang-format -i {} +
 # cpplint google C++ スタイルチェック
 find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec cpplint {} +
 # clang-tidy 静的解析
-find src -name "*.cpp" -o -name "*.h" | xargs clang-tidy -p build --header-filter='.*'
+find src -name "*.cpp" -o -name "*.hpp" | xargs clang-tidy -p build --header-filter='.*'
 ```
 
 ```
 # modify to crash
 vim ../src/main.cpp
+ninja clean
 ninja
 ./main # crash
 # analyze coredump

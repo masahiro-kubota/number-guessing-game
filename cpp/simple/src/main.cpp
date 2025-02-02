@@ -11,7 +11,7 @@ void throw_function()
 
 void crash_function()
 {
-  int * p = NULL;
+  int * p = nullptr;
   *p = 1;
 }
 
