@@ -21,7 +21,7 @@ int main(int /*argc*/, char *argv[]){
   google::InstallFailureSignalHandler();
 
   //throw_function(); // call std::terminate()
-  crash_function(); // segmentation fault
+  //crash_function(); // segmentation fault
 
   // ポリモーフィズムを使うためには、値ではなくポインタを生成するしかない。
   std::shared_ptr<IIoHandler> io_handler_ptr = std::make_shared<CliIo>(); // プレゼンテーション層の初期化
