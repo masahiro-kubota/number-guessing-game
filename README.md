@@ -12,6 +12,7 @@
 
 ```
 git clone --recursive git@github.com:masahiro-kubota/number-guessing-game.git
+# For cpp project and python ros2
 make build
 make run
 ```
