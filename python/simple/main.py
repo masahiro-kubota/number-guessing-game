@@ -31,7 +31,7 @@ class number_guessing_game():
             self._previous_answer = self._present_answer
             self._count += 1
         self.final_check()
-                
+
     def validate_input(self):
         while True:
             try:
@@ -47,7 +47,7 @@ class number_guessing_game():
                         print("Please input a number between 1 and 100")
                 else:
                     print("Please input an integer")
-        
+
     def answer_check(self, user_answer):
         if self._secret_number == user_answer:
             self._is_success = True
@@ -111,4 +111,3 @@ def compare(a, b):
 
 if __name__ == "__main__":
     game = number_guessing_game()
-

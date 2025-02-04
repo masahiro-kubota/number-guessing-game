@@ -22,7 +22,7 @@ class MinimalPublisher(Node):
 def main(args=None):
     rclpy.init(args=args)
     minimal_publisher = MinimalPublisher()
-    
+
     try:
         rclpy.spin(minimal_publisher)
     except KeyboardInterrupt:
@@ -30,4 +30,3 @@ def main(args=None):
     finally:
         minimal_publisher.destroy_node()
         rclpy.shutdown()
-

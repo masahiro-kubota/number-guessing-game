@@ -14,4 +14,3 @@ void MinimalPublisher::publish_input() {
     publisher_ -> publish(message);
   }
 }
-

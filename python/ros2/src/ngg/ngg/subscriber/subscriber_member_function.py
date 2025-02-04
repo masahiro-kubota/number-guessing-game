@@ -16,7 +16,7 @@ class MinimalSubscriber(Node):
 
     def listener_callback(self, msg):
         self.get_logger().info(f'I heard: {msg.data}')
-        self._game_manager.process_data(msg.data) 
+        self._game_manager.process_data(msg.data)
 
 class GameSetting:
     def __init__(self, secret_number, max_attempts):
@@ -33,7 +33,7 @@ class GameState:
         print(input)
         print(game_setting._secret_number==input)
         return GameState(
-                input, 
+                input,
                 self._current_attempt+1,
                 game_setting._secret_number==input)
 
@@ -67,4 +67,3 @@ def main(args=None):
     rclpy.spin(minimal_subscriber)
     minimal_subscriber.destroy_node()
     rclpy.shutdown()
-

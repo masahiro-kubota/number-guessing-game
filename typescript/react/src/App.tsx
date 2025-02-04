@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
-type FixedLengthArray<T, L extends number, R extends T[] = []> = 
+type FixedLengthArray<T, L extends number, R extends T[] = []> =
   R['length'] extends L ? R : FixedLengthArray<T, L, [T, ...R]>;
 
 type SquareProps = {
@@ -11,7 +11,7 @@ type SquareProps = {
 
 function Square({ value, onSquareClick }: SquareProps): JSX.Element {
   return (
-    <button 
+    <button
       className="square"
       onClick={onSquareClick}
     >
@@ -26,7 +26,7 @@ type BoardProps = {
   xIsNext: boolean;
   squares: NineElementArray;
   onPlay: any;
-} 
+}
 
 function Board({ xIsNext, squares, onPlay }: BoardProps): JSX.Element{
   function handleClick(i: number): void {
@@ -81,7 +81,7 @@ export default function Game(): JSX.Element {
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
-  
+
   function jumpTo(nextMove: number): void {
     setCurrentMove(nextMove);
   }
@@ -126,7 +126,7 @@ function calculateWinner(squares: NineElementArray): string | null {
     const [a, b, c] = lines[i] as [number, number, number];
     if (squares[a] && squares[a]==squares[b] && squares[a]==squares[c]) {
       return squares[a] as string | null;
-    } 
+    }
   }
   return null;
 }

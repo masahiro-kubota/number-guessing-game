@@ -6,7 +6,7 @@ classDiagram
 
     class GameManager {
         +GameManager(uiFactory: IUserInterfaceFactory)
-        +ProcessAttempt(inputData: IUserInterface, gameSetting: GameSetting, previousGameState: GameState) GameState$ 
+        +ProcessAttempt(inputData: IUserInterface, gameSetting: GameSetting, previousGameState: GameState) GameState$
     }
 
     class GameSetting {

@@ -31,4 +31,3 @@ RosIoCore::RosIoCore(RosIo* ros_io) : Node("number_guessing_game") {
 void RosIoCore::internal_callback(const std_msgs::msg::String::SharedPtr msg, RosIo* ros_io) {
   ros_io->callback(InputData{msg->data});
 }
-

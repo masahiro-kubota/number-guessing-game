@@ -23,4 +23,3 @@ class RosIoCore : public rclcpp::Node {
     RosIoCore(RosIo* ros_io);
     void internal_callback(const std_msgs::msg::String::SharedPtr msg, RosIo* ros_io);
 };
-

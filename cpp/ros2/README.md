@@ -32,10 +32,3 @@ cd cpp/ros2
 . install/setup.zsh
 ros2 run ngg listener
 ```
-
-
-
-
-
-
-

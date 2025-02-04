@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+
+
         rb = GetComponent<Rigidbody>();
         count = 0;
         isSuccess = false;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-      Vector3 movement = new Vector3(movementX, 0.0f, movementY); 
+      Vector3 movement = new Vector3(movementX, 0.0f, movementY);
       rb.AddForce(movement * speed);
     }
 

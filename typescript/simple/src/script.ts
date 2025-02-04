@@ -83,7 +83,7 @@ class GameLogic {
   }
 
   isMaxCount(count: number): boolean{
-    return (this.#maxCount === count) ? true : false; 
+    return (this.#maxCount === count) ? true : false;
   }
 
   isNumCorrect(number: number): boolean{
@@ -108,12 +108,12 @@ class GameLogic {
       ? ComparisonResult.CLOSER
       : ComparisonResult.FARTHER;
   }
-  
+
   checkInput(input: number): string{
     const count: number = this.#gameData.length;
     if (isNaN(input)) {
       return `Your input is not Number. Count is ${count}`;
-    } 
+    }
     const number: number = Number(input);
     if (number < 1 || 100 < number){
       return `You need to input the number from 1 to 100. Count is ${count}`;
@@ -193,4 +193,3 @@ class GameApp {
 }
 
 GameApp.initialize();
-

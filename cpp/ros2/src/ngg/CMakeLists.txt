@@ -24,10 +24,10 @@ find_package(std_msgs REQUIRED)
 find_package(diagnostic_updater REQUIRED)
 
 # 実行ファイルを定義して、そのソースファイルを指定
-add_executable(talker 
+add_executable(talker
     src/publisher/publisher_member_function.cpp
     src/publisher/main.cpp)
-  
+
 add_executable(listener
     src/subscriber/subscriber_member_function.cpp
     src/subscriber/main.cpp)

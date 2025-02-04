@@ -42,7 +42,7 @@ namespace UI {
             return UserInterfaceHelper.InputTime();
         }
 
-        public void StandardOutput(string output) { 
+        public void StandardOutput(string output) {
             Console.WriteLine(output);
         }
     }
@@ -66,7 +66,7 @@ namespace UI {
             return UserInterfaceHelper.InputTime();
         }
 
-        public void StandardOutput(string output) { 
+        public void StandardOutput(string output) {
             File.WriteAllText(FilePath, output);
         }
     }

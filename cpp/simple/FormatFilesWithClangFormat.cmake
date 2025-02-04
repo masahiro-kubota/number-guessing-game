@@ -30,4 +30,3 @@ function(clang_format target)
     endif()
   endif()
 endfunction()
-

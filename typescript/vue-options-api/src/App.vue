@@ -2,7 +2,7 @@
 import { ComparisonResult } from './enums/ComparisonResult';
 import { numberInput } from './types/index';
 import { GameLogic } from './logic/GameLogic';
-import { LocalStorageGameStorage } from './logic/GameStorage'; 
+import { LocalStorageGameStorage } from './logic/GameStorage';
 
 export default {
   data(): {gameLogic: GameLogic | null, storage: LocalStorageGameStorage | null, reply: string, inputNum: number | null} {
@@ -23,7 +23,7 @@ export default {
     handleSubmit() {
       console.log(this.secretNumber);
       this.reply = this.gameLogic.checkInput(this.inputNum);
-      this.inpuNum = 0; 
+      this.inpuNum = 0;
     },
     handleReset() {
       console.log('test2');

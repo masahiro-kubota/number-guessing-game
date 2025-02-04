@@ -12,7 +12,7 @@ struct InputData {
   const std::string user_name;
   const std::string user_input;
 
-  InputData(std::string input = "default", std::string name = "default") 
+  InputData(std::string input = "default", std::string name = "default")
     : timestamp(std::chrono::high_resolution_clock::now()),
       user_name(name),
       user_input(input){}

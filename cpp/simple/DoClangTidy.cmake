@@ -26,4 +26,3 @@ function(clang_tidy target)
     endif()
   endif()
 endfunction()
-

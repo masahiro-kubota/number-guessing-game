@@ -16,4 +16,3 @@ git clone --recursive git@github.com:masahiro-kubota/number-guessing-game.git
 make build
 make run
 ```
-

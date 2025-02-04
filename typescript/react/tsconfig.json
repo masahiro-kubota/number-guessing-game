@@ -1,26 +1,20 @@
 {
   "compilerOptions": {
-    /* ビルド情報 */
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
-    /* JavaScriptバージョンと標準ライブラリ */
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
 
-    /* クラスのフィールド */
     "useDefineForClassFields": true,
 
-    /* モジュール設定 */
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
 
-    /* コンパイル出力 */
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* 厳密な型チェック */
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -30,17 +24,14 @@
     "alwaysStrict": true,
     "noUncheckedIndexedAccess": true,
 
-    /* コード品質チェック */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedSideEffectImports": true,
 
-    /* 分離されたモジュール */
     "isolatedModules": true,
 
-    /* その他 */
     "exactOptionalPropertyTypes": true
   },
   "include": ["src"],

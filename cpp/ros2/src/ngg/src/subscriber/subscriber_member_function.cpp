@@ -70,4 +70,3 @@ GameState GameState::update_state(int input, GameState game_state, GameSetting g
     game_setting.SECRET_NUM == input ? true : false
     );
 }
-

@@ -48,4 +48,3 @@ TEST(GameStateTest, MaxAttemptsReached) {
   GameState new_state = game_state.update_state(input, game_state, game_setting);
   EXPECT_EQ(new_state.current_attempt_, 7);
 }
-

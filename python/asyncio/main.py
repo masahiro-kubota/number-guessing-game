@@ -20,13 +20,13 @@ class number_guessing_game():
         self._num_of_response = 0
         self._is_correct = False
         secret_number_var.set(42) # random.randint(1,100)
-    
+
     def run(self): #TODO add try, exception, finally syntax
         asyncio.run(self.async_main())
         self._finish_time = time()
         elapsed_time = self._finish_time - self._start_time
         logger.info(f"elapsed_time: {elapsed_time}")
-        
+
 
     async def async_main(self):
         try:
@@ -68,7 +68,7 @@ class number_guessing_game():
 
     async def validate_input(self): # TODO validate input
         while True:
-            try: 
+            try:
                 player_input_raw = await aioconsole.ainput()
                 player_input_float = float(player_input_raw)
             except ValueError:
@@ -149,11 +149,9 @@ def load_logging_config(file, log_level=INFO, formatter="simple"):
     config.dictConfig(log_conf)
     logger = getLogger(__name__)
     return logger
-    
+
 if __name__ == "__main__":
     logger = load_logging_config('log_config.json')
     game_var = ContextVar("request_id", default=None)
     game = number_guessing_game()
     game.run()
-
-

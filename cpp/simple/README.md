@@ -10,7 +10,7 @@ sudo sysctl -w kernel.core_pattern=core.%e.%p
 
 ```
 # build C++
-mkdir build 
+mkdir build
 cd build
 cmake -G "Ninja" ..
 ninja
@@ -40,7 +40,7 @@ gdb main core.main.<PID>
 <summary>gdb main core.main.716 </summary>
 
 ```
-[ros2-custom] root:/workspace/build$ gdb main core.main.716 
+[ros2-custom] root:/workspace/build$ gdb main core.main.716
 GNU gdb (Ubuntu 12.1-0ubuntu1~22.04.2) 12.1
 Copyright (C) 2022 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -71,12 +71,7 @@ Program terminated with signal SIGSEGV, Segmentation fault.
 p = 0x0
 (gdb) print p
 $1 = (int *) 0x0
-(gdb) 
+(gdb)
 ```
 
 </details>
-
-
-
-
-
