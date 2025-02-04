@@ -14,7 +14,7 @@
 ### In the root directory create a docker container and work inside it.
 ```
 # Test
-# 詳細なログありtest
+# テスト結果をリアルタイムでコンソールに出力するオプション
 colcon test --event-handlers console_direct+
 ```
 ```
