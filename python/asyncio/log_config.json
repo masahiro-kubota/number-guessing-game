@@ -1,46 +1,46 @@
 {
-    "version": 1,
-    "disable_existing_loggers": false,
+  "version": 1,
+  "disable_existing_loggers": false,
 
-    "formatters": {
-        "simple": {
-            "format": ""
-        },
-        "detailed": {
-            "format": "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: %(message)s"
-        }
+  "formatters": {
+    "simple": {
+      "format": ""
     },
-
-    "root": {
-        "level": "INFO"
-    },
-
-    "loggers": {
-        "sub": {
-            "level": "DEBUG",
-            "handlers": ["consoleHandler", "fileHandler"],
-            "propagate": false
-        },
-        "__main__": {
-            "level": "DEBUG",
-            "handlers": ["consoleHandler", "fileHandler"],
-            "propagate": false
-        }
-    },
-
-    "handlers": {
-        "fileHandler": {
-            "class": "logging.FileHandler",
-            "level": "DEBUG",
-            "formatter": "simple",
-            "filename": "log.log",
-            "encoding": "utf-8"
-        },
-        "consoleHandler": {
-            "class": "logging.StreamHandler",
-            "level": "DEBUG",
-            "formatter": "simple",
-            "stream": "ext://sys.stdout"
-        }
+    "detailed": {
+      "format": "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: %(message)s"
     }
+  },
+
+  "root": {
+    "level": "INFO"
+  },
+
+  "loggers": {
+    "sub": {
+      "level": "DEBUG",
+      "handlers": ["consoleHandler", "fileHandler"],
+      "propagate": false
+    },
+    "__main__": {
+      "level": "DEBUG",
+      "handlers": ["consoleHandler", "fileHandler"],
+      "propagate": false
+    }
+  },
+
+  "handlers": {
+    "fileHandler": {
+      "class": "logging.FileHandler",
+      "level": "DEBUG",
+      "formatter": "simple",
+      "filename": "log.log",
+      "encoding": "utf-8"
+    },
+    "consoleHandler": {
+      "class": "logging.StreamHandler",
+      "level": "DEBUG",
+      "formatter": "simple",
+      "stream": "ext://sys.stdout"
+    }
+  }
 }

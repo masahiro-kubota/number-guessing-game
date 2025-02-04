@@ -13,6 +13,7 @@ Viteを使っているのでTSを手動でコンパイルする必要ないしHM
 
 奇跡的にGameLogicがUIに依存していないのは良いけど、storageにがっつり依存しているので、GameLogicをしっかり把握していないとstorageが変更したときにGameLogicでバグが発生する可能性がある。
 storageがGameLogicに依存している形(DIP)にしておけば、GameLogicの実装をちゃんと知らなくても、storageの実装さえちゃんとやれば安全に変更できる。
+
 ```
 class GameLogic {
   #secretNumber: number;
@@ -32,6 +33,7 @@ class GameLogic {
 
 domServiceが何にも依存していないので好きなように書き換えられてしまう。それをgameUIAdapterで吸収するしかないので、修正が加わっていくとGameUIAdapterがカオスになる可能性がある。
 GameUIAdapterのカオスを防ぎたければ、gameLogicを修正することになってしまう。
+
 ```
     const storage = new LocalStorageGameStorage('my-game');
     const domService = new GameDomService();

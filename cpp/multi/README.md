@@ -3,12 +3,14 @@ colcon build --symlink-install
 . install/setup.zsh
 ./build/ngg/main <io_type> # cli, ros
 ```
+
 ```
 # ros
 make exec
 . install/setup.zsh
 ros2 topic pub /topic_input std_msgs/msg/String "{data: 43}" --once
 ```
+
 ```
 # ros
 make exec
