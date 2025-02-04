@@ -16,6 +16,7 @@
 # Test
 # テスト結果をリアルタイムでコンソールに出力するオプション
 colcon test --event-handlers console_direct+
+colcon test-result --verbose
 ```
 ```
 # terminal 1
