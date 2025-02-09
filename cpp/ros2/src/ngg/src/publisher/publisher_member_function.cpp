@@ -14,8 +14,7 @@
 
 #include "publisher_member_function.hpp"
 
-MinimalPublisher::MinimalPublisher()
-: Node("minimal_publisher"), count_(0)
+MinimalPublisher::MinimalPublisher() : Node("minimal_publisher"), count_(0)
 {
   publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
   publish_input();
