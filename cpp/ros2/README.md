@@ -17,17 +17,6 @@ colcon test-result --verbose
 ```
 
 ```
-# terminal 1
 colcon build --symlink-install
-. install/setup.zsh
-ros2 run ngg talker
-```
-
-```
-# terminal 2
-# In the root directory
-make exec # work inside the container
-cd cpp/ros2
-. install/setup.zsh
-ros2 run ngg listener
+./ros2_tmux.sh
 ```
