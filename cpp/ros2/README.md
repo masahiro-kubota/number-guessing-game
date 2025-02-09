@@ -11,7 +11,7 @@
 
 ```
 # Test
-# テスト結果をリアルタイムでコンソールに出力するオプション
+# テスト結果をリアルタイムでコンソールに出力するオプション（linterをamentのものからautowareのものに変えている。clang-formatとuncrustifyが競合しなくなりそう）
 colcon build --symlink-install
 colcon test --event-handlers console_direct+
 colcon test-result --verbose
