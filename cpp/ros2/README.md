@@ -17,6 +17,10 @@ colcon test-result --verbose
 ```
 
 ```
+ament_uncrustify --reformat
+```
+
+```
 colcon build --symlink-install
 ./ros2_tmux.sh
 ```

@@ -61,8 +61,8 @@ endif()
 # Linter のセットアップ
 find_package(ament_lint_auto REQUIRED)
 # 以下の行のコメントを外すと、特定の Linter をスキップできる
-# set(ament_cmake_copyright_FOUND TRUE)  # 著作権チェックをスキップ
-# set(ament_cmake_cpplint_FOUND TRUE)    # cpplint チェックをスキップ
+set(ament_cmake_copyright_FOUND TRUE)  # 著作権チェックをスキップ
+set(ament_cmake_cpplint_FOUND TRUE)    # cpplint チェックをスキップ
 ament_lint_auto_find_test_dependencies()
 
 # amentパッケージとしての設定を適用

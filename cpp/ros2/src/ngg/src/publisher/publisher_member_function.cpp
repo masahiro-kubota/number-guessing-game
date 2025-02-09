@@ -1,16 +1,18 @@
 #include "publisher_member_function.hpp"
 
 MinimalPublisher::MinimalPublisher()
-: Node("minimal_publisher"), count_(0) {
+: Node("minimal_publisher"), count_(0)
+{
   publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
   publish_input();
 }
 
-void MinimalPublisher::publish_input() {
-  for (int i = 0; i < 5 ; i++) {
+void MinimalPublisher::publish_input()
+{
+  for (int i = 0; i < 5; i++) {
     auto message = std_msgs::msg::String();
     RCLCPP_INFO(this->get_logger(), "Input the number:");
     std::cin >> message.data;
-    publisher_ -> publish(message);
+    publisher_->publish(message);
   }
 }

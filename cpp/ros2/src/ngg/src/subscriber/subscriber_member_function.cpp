@@ -16,8 +16,9 @@
 
 MinimalSubscriber::MinimalSubscriber()
 : Node("minimal_subscriber"),
-  game_setting(43,7),
-  game_state() {
+  game_setting(43, 7),
+  game_state()
+{
   subscription_ = this->create_subscription<std_msgs::msg::String>(
     "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
   updater_ = std::make_unique<diagnostic_updater::Updater>(this);
@@ -25,7 +26,8 @@ MinimalSubscriber::MinimalSubscriber()
   updater_->add("game_status", this, &MinimalSubscriber::produce_diagnostics);
 }
 
-void MinimalSubscriber::produce_diagnostics(diagnostic_updater::DiagnosticStatusWrapper & stat) {
+void MinimalSubscriber::produce_diagnostics(diagnostic_updater::DiagnosticStatusWrapper & stat)
+{
   if (game_state.is_success_) {
     stat.summary(diagnostic_msgs::msg::DiagnosticStatus::OK, "Game completed successfully");
   } else if (game_state.current_attempt_ >= game_setting.MAX_ATTEMPTS) {
@@ -37,36 +39,38 @@ void MinimalSubscriber::produce_diagnostics(diagnostic_updater::DiagnosticStatus
   }
 }
 
-void MinimalSubscriber::topic_callback(const std_msgs::msg::String & msg) {
-    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
-    if (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
-      try {
-        std::string input = msg.data;
-        int num = std::stoi(input);
-        game_state = game_state.update_state(num, game_state, game_setting);
-        if (game_state.is_success_) {
-          std::cout << "Correct" << std::endl;
-        } else {
-          std::cout << "Incorrect" << std::endl;
-        }
-        updater_->force_update();
-      } catch (const std::invalid_argument&) {
-        // 例外オブジェクトを使わない場合は、const参照を使わなくてもいい。
-        std::cout << "Invalid Input" << std::endl;
-      } catch (const std::out_of_range& e) {
-        std::cout << "Out of range" << std::endl;
+void MinimalSubscriber::topic_callback(const std_msgs::msg::String & msg)
+{
+  RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
+  if (game_state.current_attempt_ < game_setting.MAX_ATTEMPTS && !game_state.is_success_) {
+    try {
+      std::string input = msg.data;
+      int num = std::stoi(input);
+      game_state = game_state.update_state(num, game_state, game_setting);
+      if (game_state.is_success_) {
+        std::cout << "Correct" << std::endl;
+      } else {
+        std::cout << "Incorrect" << std::endl;
       }
-    }
-    if (game_state.current_attempt_ == game_setting.MAX_ATTEMPTS) {
-      std::cout << "max attempts" << std::endl;
       updater_->force_update();
+    } catch (const std::invalid_argument &) {
+      // 例外オブジェクトを使わない場合は、const参照を使わなくてもいい。
+      std::cout << "Invalid Input" << std::endl;
+    } catch (const std::out_of_range & e) {
+      std::cout << "Out of range" << std::endl;
     }
+  }
+  if (game_state.current_attempt_ == game_setting.MAX_ATTEMPTS) {
+    std::cout << "max attempts" << std::endl;
+    updater_->force_update();
+  }
 }
 
-GameState GameState::update_state(int input, GameState game_state, GameSetting game_setting) {
+GameState GameState::update_state(int input, GameState game_state, GameSetting game_setting)
+{
   return GameState(
     input,
     game_state.current_attempt_ + 1,
     game_setting.SECRET_NUM == input ? true : false
-    );
+  );
 }
