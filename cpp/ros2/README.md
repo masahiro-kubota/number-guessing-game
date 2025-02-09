@@ -17,6 +17,7 @@ colcon test-result --verbose
 ```
 
 ```
+# uncrustifyとclang-formatが競合してそう
 ament_uncrustify --reformat
 ```
 

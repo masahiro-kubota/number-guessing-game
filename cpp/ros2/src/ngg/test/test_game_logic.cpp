@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <gtest/gtest.h>
 #include "subscriber/subscriber_member_function.hpp"
 
+#include <gtest/gtest.h>
 
-TEST(GameStateTest, UpdateStateSuccess) {
+TEST(GameStateTest, UpdateStateSuccess)
+{
   std::cout << "Test started" << std::endl;
 
   GameSetting game_setting(43, 7);
