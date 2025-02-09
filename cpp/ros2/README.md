@@ -25,7 +25,6 @@ find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec cpplint {} +
 ```
 
 ```
-# uncrustifyとclang-formatが競合してそう
 # format uncrustify
 ament_uncrustify --reformat
 ```
