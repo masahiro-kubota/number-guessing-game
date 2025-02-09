@@ -12,16 +12,18 @@
 ```
 # Test
 # テスト結果をリアルタイムでコンソールに出力するオプション
+colcon build --symlink-install
 colcon test --event-handlers console_direct+
 colcon test-result --verbose
 ```
 
 ```
 # uncrustifyとclang-formatが競合してそう
+# format uncrustify
 ament_uncrustify --reformat
 ```
 
 ```
-colcon build --symlink-install
+# launch
 ./ros2_tmux.sh
 ```
