@@ -7,7 +7,7 @@
 
 </details>
 
-### In the root directory create a docker container and work inside it
+### Go to the root directory and create a docker container and work inside it
 
 ```
 # Test
